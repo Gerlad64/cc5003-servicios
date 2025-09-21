@@ -4,7 +4,7 @@
 /**
  * Interface que guarda los medios de contacto de un usuario.
  */
-interface Contact {
+export interface Contact {
     whatsapp?: string;
     instagram?: string;
     telegram?: string;
