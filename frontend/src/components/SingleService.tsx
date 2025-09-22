@@ -80,7 +80,7 @@ const Contact = (props: ContactProps) => {
 
 interface Props {
     service: ServiceData
-    user: {name: string, profile_pic: string}
+    user?: {name: string, profile_pic?: string}
 }
 /**
  * Componente que genera la vista de un servicio.
@@ -92,6 +92,8 @@ interface Props {
  * @returns un div con los detalles del servicio
  */
 export function SingleService({service, user}: Props) {
+    if(user == undefined)
+        return (<>{console.log(`SingleService: no user provided for service: ${service.id}`)}</>);
     
     return (
         <div>
