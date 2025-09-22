@@ -1,7 +1,7 @@
 import axios from "axios"
 import type { ServiceData } from "../model/ServiceData";
 
-const baseUrl = "/..."
+const baseUrl = "http://localhost:3001/services"
 
 
 /**
@@ -21,9 +21,15 @@ const getFiltered = (filter: (u: ServiceData) => boolean) => {
 };
 
 const getbyId = (id: number | number[]) => {
-    const ids = Array.isArray(id) ? id : [id];
-    const filter = (s: ServiceData) => ids.includes(s.id);
-    return getFiltered(filter);
+    if (Array.isArray(id)) {
+        // Si es un array, usar filtro para múltiples IDs
+        const filter = (s: ServiceData) => id.includes(s.id);
+        return getFiltered(filter);
+    } else {
+        // Si es un solo ID, usar el endpoint específico de json-server
+        const request = axios.get(`${baseUrl}/${id}`);
+        return request.then((req) => [req.data as ServiceData]);
+    }
 };
 
 export default {
