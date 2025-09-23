@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
-import { HomePage } from './components/HomePage'
-import { Services } from './components/Services'
-import { SingleServicePage } from './components/SingleServicePage'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+import { HomePage } from './components/HomePage';
+import { Services } from './components/Services';
+import { SingleServicePage } from './components/SingleServicePage';
 
 function App() {
   return (
@@ -16,6 +16,6 @@ function App() {
       </div>
     </Router>
   )
-}
+};
 
-export default App
+export default App;

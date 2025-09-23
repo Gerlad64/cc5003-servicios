@@ -6,7 +6,7 @@ interface HeaderProps {
     rating: number
     location: string
     profile_pic?: string
-}
+};
 
 const Header = (props : HeaderProps) => {
     return (
@@ -43,11 +43,11 @@ const Header = (props : HeaderProps) => {
             </div>
         </div>
     )
-}
+};
 
 interface PricingProps {
     pricing: string
-}
+};
 
 const Pricing = (props : PricingProps) => {
     return (
@@ -64,11 +64,11 @@ const Pricing = (props : PricingProps) => {
             </div>
         </div>
     )
-}
+};
 
-interface DescriptionProps {
+interface DescriptionProps {
     description: string
-}
+};
 
 const Description = (props: DescriptionProps) => {
     return (
@@ -84,11 +84,11 @@ const Description = (props: DescriptionProps) => {
             </p>
         </div>
     )
-}
+};
 
 interface ScheduleProps {
     schedule: string
-}
+};
 
 const Schedule = (props: ScheduleProps) => {
     return (
@@ -103,11 +103,11 @@ const Schedule = (props: ScheduleProps) => {
             </p>
         </div>
     )
-}
+};
 
 interface ContactProps {
     contact: Contact
-}
+};
 
 const Contact = (props: ContactProps) => {
     return (
@@ -115,7 +115,8 @@ const Contact = (props: ContactProps) => {
             backgroundColor: '#f8f9fa', 
             padding: '20px', 
             borderRadius: '8px',
-            marginTop: '20px'
+            marginTop: '20px',
+            color: 'gray'
         }}>
             <h3 style={{ margin: '0 0 15px 0', color: '#333' }}>Contacto</h3>
             <div style={{ display: 'grid', gap: '10px' }}>
@@ -146,12 +147,13 @@ const Contact = (props: ContactProps) => {
             </div>
         </div>
     )
-}
+};
 
 interface Props {
     service: ServiceData
     user?: {name: string, profile_pic?: string}
-}
+};
+
 /**
  * Componente que genera la vista de un servicio.
  * Se debe proveer el servicio que se ofrece, el
@@ -207,4 +209,4 @@ export function SingleService({service, user}: Props) {
             <Contact contact={service.contact}/>
         </div>
     )
-}
+};

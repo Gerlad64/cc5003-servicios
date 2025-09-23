@@ -1,8 +1,7 @@
-import axios from "axios"
+import axios from "axios";
 import type { ServiceData } from "../model/ServiceData";
 
-const baseUrl = "http://localhost:3001/services"
-
+const baseUrl = "http://localhost:3001/services";
 
 /**
  * trae del servidor todos los servicios
@@ -35,5 +34,5 @@ const getbyId = (id: number | number[]) => {
 export default {
     getAll,
     getFiltered,
-    getbyId,    
-}
+    getbyId,
+};

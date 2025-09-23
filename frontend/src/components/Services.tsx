@@ -1,13 +1,13 @@
-import type { ServiceData } from "../model/ServiceData"
-import type { UserData } from "../model/UserData"
-import serviceReq from "../requests/services"
-import userReq from "../requests/users"
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { SearchFilters } from "./SearchFilters"
-import type { FilterState } from "./SearchFilters"
+import type { ServiceData } from "../model/ServiceData";
+import type { UserData } from "../model/UserData";
+import serviceReq from "../requests/services";
+import userReq from "../requests/users";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { SearchFilters } from "./SearchFilters";
+import type { FilterState } from "./SearchFilters";
 
-type User = Pick<UserData, "id" | "name" | "profile_pic">
+type User = Pick<UserData, "id" | "name" | "profile_pic">;
 
 /**
  * Componente que genera la vista de una lista de servicios
@@ -16,8 +16,8 @@ type User = Pick<UserData, "id" | "name" | "profile_pic">
 export function Services() {
     const [services, setServices] = useState<ServiceData[]>([]);
     const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [filters, setFilters] = useState<FilterState>({
         searchText: '',
         location: '',
@@ -25,7 +25,7 @@ export function Services() {
         priceRange: '',
         rating: '',
         deliveryOption: ''
-    })
+    });
 
     // trae todos los servicios y usuarios
     useEffect(() => {
@@ -41,28 +41,28 @@ export function Services() {
                     name: u.name + " " + u.last_name, 
                     profile_pic: u.profile_pic
                 })));
-                setLoading(false)
+                setLoading(false);
             })
             .catch((error) => {
-                console.error('Error loading services:', error)
-                setError('Error al cargar los servicios')
-                setLoading(false)
+                console.error('Error loading services:', error);
+                setError('Error al cargar los servicios');
+                setLoading(false);
             })
     }, []);
 
     const handleFiltersChange = (newFilters: FilterState) => {
         setFilters(newFilters)
         // Aquí se implementará la lógica de filtrado en el futuro
-        console.log('Filtros aplicados:', newFilters)
-    }
+        console.log('Filtros aplicados:', newFilters);
+    };
 
     if (loading) {
         return <div>Cargando servicios...</div>
-    }
+    };
 
     if (error) {
         return <div>Error: {error}</div>
-    }
+    };
 
     return (
         <div>
@@ -103,4 +103,4 @@ export function Services() {
             </div>
         </div>
     )
-}
+};

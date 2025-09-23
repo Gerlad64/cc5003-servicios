@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 /**
  * Componente de página principal con navegación a servicios
@@ -15,4 +15,4 @@ export function HomePage() {
             </Link>
         </div>
     )
-}
+};

@@ -1,5 +1,3 @@
-
-
 /**
  * Interface que representa un usuario de la aplicación, 
  * ya sea prestador de algún servicio o no.
@@ -21,4 +19,4 @@ export interface UserData {
     biography?: string;
     /** la calificación total por todos sus servicios */
     rating: number;
-}
+};

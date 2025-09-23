@@ -1,6 +1,3 @@
-
-
-
 /**
  * Interface que guarda los medios de contacto de un usuario.
  */
@@ -9,8 +6,7 @@ export interface Contact {
     instagram?: string;
     telegram?: string;
     mail?: string; 
-}
-
+};
 
 /**
  * Interface que representa un servicio prestado por algún usuario.
@@ -42,4 +38,4 @@ export interface ServiceData {
     pricing: string;
     /** objeto Contact con medios para contactar al prestador de servicio */
     contact: Contact;
-}
+};
