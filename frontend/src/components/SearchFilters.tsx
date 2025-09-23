@@ -40,7 +40,7 @@ export function SearchFilters({ onFiltersChange }: FilterProps) {
             priceRange: '',
             rating: '',
             deliveryOption: ''
-        }
+        };
         setFilters(clearedFilters);
         onFiltersChange?.(clearedFilters);
     };
@@ -69,12 +69,12 @@ export function SearchFilters({ onFiltersChange }: FilterProps) {
                     onChange={(e) => handleFilterChange('location', e.target.value)}
                 >
                     <option value="">Todas</option>
-                    <option value="Santiago Centro">Santiago Centro</option>
-                    <option value="Las Condes">Las Condes</option>
-                    <option value="Providencia">Providencia</option>
-                    <option value="Ñuñoa">Ñuñoa</option>
+                    <option value="santiago-centro">Santiago Centro</option>
+                    <option value="las-condes">Las Condes</option>
+                    <option value="providencia">Providencia</option>
+                    <option value="ñuñoa">Ñuñoa</option>
                     <option value="maipu">Maipú</option>
-                    <option value="Online">Online</option>
+                    <option value="online">Online</option>
                 </select>
             </div>
 
