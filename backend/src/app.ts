@@ -1,11 +1,14 @@
+/* Dependencias */
 import express from "express";
 import mongoose from "mongoose";
-
+/* utils */
 import logger from "./utils/logger";
 import config from "./utils/config";
-
+/* controller */
 import servicesRouter from "./controllers/service"
 import usersRouter from "./controllers/user"
+/* middlewares */
+import errorMiddleware from "./middlewares/errorMiddleware";
 
 const app = express();
 
@@ -20,5 +23,8 @@ app.use(express.json());
 
 app.use("/api/services", servicesRouter);
 app.use("/api/users", usersRouter);
+
+app.use(errorMiddleware.unknownEndpoint);
+app.use(errorMiddleware.errorHandler);
 
 export default app;
