@@ -9,4 +9,9 @@ const MONGODB_URI =
         ? process.env.TEST_MONGODB_URI
         : process.env.MONGODB_URI;
 
-export default { PORT, MONGODB_URI, HOST };
+const MONGODB_DBNAME =
+    process.env.NODE_ENV === "test" ?
+    process.env.TEST_MONGODB_DBNAME :
+    process.env.MONGODB_DBNAME || "serviciosCLdb"
+
+export default { PORT, MONGODB_URI, HOST, MONGODB_DBNAME };
