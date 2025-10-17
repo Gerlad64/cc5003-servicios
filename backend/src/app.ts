@@ -6,7 +6,7 @@ import logger from "./utils/logger";
 import config from "./utils/config";
 /* routes */
 import servicesRouter from './routes/services'
-import usersRouter from './routes/services'
+import usersRouter from './routes/users'
 /* middlewares */
 import errorMiddleware from "./middlewares/errorMiddleware";
 
