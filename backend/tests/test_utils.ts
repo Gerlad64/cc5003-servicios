@@ -86,13 +86,13 @@ const SERVICES =
     ]
 
 /** Elimina datos y luego carga datos de prueba a la base de datos de testing */
-const load = async (session: mongoose.mongo.ClientSession) => {
-    await User.deleteMany({}, {session})
-    await Service.deleteMany({}, {session})
+const load = async () => {
+    await User.deleteMany({})
+    await Service.deleteMany({})
     const users = await User.insertMany(USERS);
     await Service.insertMany(
         SERVICES.map((s, i) => ({ ...s, user_id: users[i]._id }))
-    , {session});
+    );
 }
 
 export default {load, USERS, SERVICES};

@@ -9,18 +9,13 @@ import Service from "../../src/models/service";
 
 const api = supertest(app);
 const base_url = "/api/users"
-let session: mongoose.mongo.ClientSession;
 
 describe("When there is initially some users", () => {
     beforeEach(async () => {
-        session = await mongoose.startSession();
-        session.startTransaction();
-        await initial.load(session);
+        await initial.load();
 
     });
     afterEach(async () => {
-        await session.abortTransaction();
-        await session.endSession();
     })
 
 
