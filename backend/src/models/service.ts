@@ -66,7 +66,7 @@ const serviceSchema = new mongoose.Schema<ServiceData>({
     },
     on_location: Boolean,
     is_delivery: Boolean,
-    delivery_scope: String,
+    delivery_scope: [String],
     location: String,
     schedule: String,
     description: String,
