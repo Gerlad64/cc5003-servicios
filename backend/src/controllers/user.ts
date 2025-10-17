@@ -2,6 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import User from "../models/user";
 
 
+const getAll = async (req: Request, res: Response) => {
+    const users = await User.find({});
+    res.json(users);
+}
+
 const getById = async (req: Request, res: Response ) => {
     const id = req.params.id;
     const user = await User.findById(id);
@@ -10,4 +15,4 @@ const getById = async (req: Request, res: Response ) => {
     return res.json(user);
 };
 
-export default { getById };
+export default { getAll, getById };
