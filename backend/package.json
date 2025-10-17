@@ -5,9 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node out/index.js",
-    "dev": "ts-node-dev src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production node out/index.js",
+    "dev": "NODE_ENV=development ts-node-dev src/index.ts",
+    "test": "NODE_ENV=test tsx --test tests/**/*.test.ts",
     "server": "json-server --port 3001 db.json"
   },
   "author": "",
