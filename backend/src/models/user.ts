@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose, { Schema, Document } from "mongoose"
 import {Service} from "json-server/lib/service";
 
 
@@ -10,7 +10,7 @@ mongoose.set("strictQuery", false);
  * Tiene toda la información relevante para que una vista pueda
  * mostrar o usar la información acerca del usuario.
  */
-interface UserData {
+interface UserData extends Document{
     /** nombre del usuario */
     name: string;
     /** apellido del usuario */
@@ -25,7 +25,7 @@ interface UserData {
     rating: number;
 }
 
-const userSchema = new mongoose.Schema<UserData>({
+const userSchema = new Schema<UserData>({
     name: {
         type: String,
         required: true,
@@ -37,8 +37,9 @@ const userSchema = new mongoose.Schema<UserData>({
         minlength: 1,
     },
     services: {
-        type: [mongoose.Schema.Types.ObjectId],
+        type: [Schema.Types.ObjectId],
         ref: "Service",
+        default: [],
     },
     profile_pic: {
         type: String,
@@ -60,15 +61,5 @@ const userSchema = new mongoose.Schema<UserData>({
 
 const User = mongoose.model<UserData>("User", userSchema);
 
-userSchema.set("toJSON", {
-    transform: (
-        _,
-        returnedObject: { id?: string; _id?: mongoose.Types.ObjectId; __v?: number }
-    ) => {
-        returnedObject.id = returnedObject._id?.toString();
-        delete returnedObject._id;
-        delete returnedObject.__v;
-    },
-});
 
 export default User
