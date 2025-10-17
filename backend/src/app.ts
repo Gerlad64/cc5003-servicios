@@ -4,9 +4,9 @@ import mongoose from "mongoose";
 /* utils */
 import logger from "./utils/logger";
 import config from "./utils/config";
-/* controller */
-import servicesRouter from "./controllers/service"
-import usersRouter from "./controllers/user"
+/* routes */
+import servicesRouter from './routes/services'
+import usersRouter from './routes/services'
 /* middlewares */
 import errorMiddleware from "./middlewares/errorMiddleware";
 
