@@ -10,7 +10,13 @@ mongoose.set("strictQuery", false);
  * Tiene toda la información relevante para que una vista pueda
  * mostrar o usar la información acerca del usuario.
  */
-interface UserData extends Document{
+interface UserData extends Document {
+    /** username para login */
+    username: string;
+    /** contraseña hasheada */
+    password: string;
+    createdAt: Date;
+    updatedAt: Date;
     /** nombre del usuario */
     name: string;
     /** apellido del usuario */
@@ -26,6 +32,13 @@ interface UserData extends Document{
 }
 
 const userSchema = new Schema<UserData>({
+    username: {
+        type: String,
+        required: true,
+        minlength: 1,
+        unique: true,
+    },
+    password: String,
     name: {
         type: String,
         required: true,
@@ -57,7 +70,7 @@ const userSchema = new Schema<UserData>({
         min: 0.0,
         max: 5.0
     },
-});
+}, { timestamps: true });
 
 const User = mongoose.model<UserData>("User", userSchema);
 
