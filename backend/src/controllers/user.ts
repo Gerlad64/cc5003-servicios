@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcrypt";
 import User from "../models/user";
 
 
@@ -15,4 +16,25 @@ const getById = async (req: Request, res: Response ) => {
     return res.json(user);
 };
 
-export default { getAll, getById };
+const createOne = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+      const {username, password, name, last_name} = req.body;
+      const saltRounds = 10;
+      const hashed = await bcrypt.hash(password, saltRounds);
+
+      const user = new User({
+          username,
+          hashed,
+          name,
+          last_name,
+      })
+      const savedUser = await user.save();
+
+      res.status(201).json(savedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { createOne, getAll, getById };
+
