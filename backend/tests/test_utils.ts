@@ -1,28 +1,41 @@
 import Service from "../src/models/service";
 import User from "../src/models/user";
-import mongoose from "mongoose";
-const USERS = [
-    {
-        name: "John",
-        last_name: "Doe",
-        biography: "I like turtles",
-    },
-    {
-        name: "Juan",
-        last_name: "Perez",
-        biography: "Me gustan las tortugas.",
-    },
-    {
-        name: "Jean",
-        last_name: "Pierre",
-        biography: "J'aime les tortues."
-    },
-    {
-        name: "Johann",
-        last_name: "Peters",
-        biography: "Ich mag es des Tørtüggens "
-    }
-]
+
+const USERS =
+    [
+        {
+            username: "jdoe",
+            password: "$2b$10$aJcUj10QQw3YffxuHDmubOOaCt.Ir3LqW5kTET8ypsIdx51h0HXYy",
+            name: "John",
+            last_name: "Doe",
+            biography: "I like turtles",
+        },
+        {
+            username: "jperez",
+            password: "$2b$10$bI70RNYdYZPemcensoCSYuC2ngmszhOmHj4QiRiOion6u.CrJfz7K",
+            name: "Juan",
+            last_name: "Perez",
+            biography: "Me gustan las tortugas.",
+        },
+        {
+            username: "jpierre",
+            password: '$2b$10$20YgDfVNgPOxaFXcbQkcv.8LS9w2UyP7G6TOQDeHn5CDZSrhZalI.',
+            name: "Jean",
+            last_name: "Pierre",
+            biography: "J'aime les tortues."
+        },
+        {
+            username: "jpetters",
+            password: '$2b$10$rGNql4lfxUkyscbuO5M6xOCR75sX41weIY5gsX3nDAmBULDDYeHeq',
+            name: "Johann",
+            last_name: "Peters",
+            biography: "Ich mag es des Tørtüggens "
+        }
+        ];
+
+
+
+
 
 const SERVICES =
     [
@@ -83,16 +96,22 @@ const SERVICES =
                 "telegram": "@tesis_ayuda"
             }
         }
-    ]
+    ];
 
 /** Elimina datos y luego carga datos de prueba a la base de datos de testing */
-const load = async () => {
+const loadUsers = async () => {
     await User.deleteMany({})
+    await User.insertMany(USERS);
+}
+
+const loadServices = async () => {
     await Service.deleteMany({})
-    const users = await User.insertMany(USERS);
+    const users = await User.find({});
     await Service.insertMany(
-        SERVICES.map((s, i) => ({ ...s, user_id: users[i]._id }))
+        SERVICES
+            .slice(0, users.length)
+            .map((s, i) => ({ ...s, user_id: users[i]._id }))
     );
 }
 
-export default {load, USERS, SERVICES};
+export default {loadServices, loadUsers, USERS, SERVICES};
