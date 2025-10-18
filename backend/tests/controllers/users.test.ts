@@ -12,7 +12,7 @@ const base_url = "/api/users"
 
 describe("When there is initially some users", () => {
     beforeEach(async () => {
-        await initial.load();
+        await initial.loadUsers();
 
     });
     afterEach(async () => {
@@ -31,7 +31,23 @@ describe("When there is initially some users", () => {
         assert.strictEqual(response.body.length, initial.USERS.length);
     })
 
+    test("A user can be created", async () => {
+        const newUser = {
+            username: "test",
+            password: "test1234",
+            name: "Tomás",
+            last_name: "Estero"
+        }
+        await api
+            .post(base_url)
+            .send(newUser)
+            .expect(201)
+            .expect("Content-Type", /application\/json/);
 
+        const users = await User.find({})
+        const usersInDb = users.map( u => u.toJSON());
+        assert.strictEqual(usersInDb.length, initial.USERS.length + 1);
+    })
 
 
 
