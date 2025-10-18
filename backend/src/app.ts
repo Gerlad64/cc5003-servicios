@@ -7,8 +7,10 @@ import config from "./utils/config";
 /* routes */
 import servicesRouter from './routes/services'
 import usersRouter from './routes/users'
+import authRouter from './routes/auth'
 /* middlewares */
 import errorMiddleware from "./middlewares/errorMiddleware";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -27,9 +29,11 @@ else {
 }
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/services", servicesRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/login", authRouter)
 
 app.use(errorMiddleware.unknownEndpoint);
 app.use(errorMiddleware.errorHandler);
