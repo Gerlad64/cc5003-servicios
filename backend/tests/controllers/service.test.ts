@@ -13,7 +13,8 @@ const base_url = "/api/services"
 
 describe("When there is initially some services", () => {
     beforeEach(async () => {
-       await initial.load();
+       await initial.loadUsers();
+       await initial.loadServices();
 
     });
     afterEach(async () => {
