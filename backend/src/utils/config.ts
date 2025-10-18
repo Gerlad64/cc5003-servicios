@@ -12,6 +12,14 @@ const MONGODB_URI =
 const MONGODB_DBNAME =
     process.env.NODE_ENV === "test" ?
     process.env.TEST_MONGODB_DBNAME :
-    process.env.MONGODB_DBNAME || "serviciosCLdb"
+    process.env.MONGODB_DBNAME || "serviciosCLdb";
 
-export default { PORT, MONGODB_URI, HOST, MONGODB_DBNAME };
+const JWT_SECRET = process.env.JWT_SECRET || "my_secret";
+
+export default {
+    PORT,
+    MONGODB_URI,
+    HOST,
+	MONGODB_DBNAME,
+	JWT_SECRET,
+};
