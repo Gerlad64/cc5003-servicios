@@ -31,8 +31,14 @@ const getbyId = (id: number | number[]) => {
     }
 };
 
+const createService  = () => {
+    const request = axios.post(baseUrl);
+    return request.then((req) => req.data as ServiceData );
+}
+
 export default {
     getAll,
     getFiltered,
     getbyId,
+    createService,
 };
