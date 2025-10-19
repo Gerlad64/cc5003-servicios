@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken";
 import User from "../models/user";
 import config from "../utils/config";
 
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         /** Obtener parametros de la request */
         const { username, password } = req.body;
         const user = await User.findOne({ username });
 
         /** Chequear si es un login válido */
-        const invalidLogin =  user ? await bcrypt.compare(password, user.password) : false;
+        const invalidLogin =  user ? !await bcrypt.compare(password, user.password) : false;
         if( invalidLogin  || !user) // 2do para que el compilador no reclame que user puede ser null
             return res.status(401).json({error: "invalid username or password"});
 
@@ -29,13 +29,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         });
 
         /** ----DONE----*/
-        res.status(200).send({ token: token });
+        res.status(200).send({ username: user.username });
     } catch (error) {
         next(error);
     }
 };
 
-export const logout = async (req: Request, res: Response) => {
+const logout = async (req: Request, res: Response) => {
     res.clearCookie("token");
     res.status(200).send({
         message: "Logged out successfully",
