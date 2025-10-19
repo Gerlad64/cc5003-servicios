@@ -5,7 +5,6 @@ import initial from '../test_utils';
 import supertest from "supertest";
 import mongoose from "mongoose";
 import User from "../../src/models/user";
-import Service from "../../src/models/service";
 
 const api = supertest(app);
 const base_url = "/api/users"
