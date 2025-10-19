@@ -3,6 +3,7 @@ import './App.css';
 import { HomePage } from './components/HomePage';
 import { Services } from './components/Services';
 import { SingleServicePage } from './components/SingleServicePage';
+import RegisterForm from './components/RegisterForm';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services/:id" element={<SingleServicePage />} />
+          <Route path="/register" element={<RegisterForm/>}/>
         </Routes>
       </div>
     </Router>

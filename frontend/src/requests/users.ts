@@ -28,7 +28,7 @@ const getbyId = (id: number | number[]) => {
     }
 };
 
-const createUser = (newUser : Omit<UserData, "id">) => {
+const createUser = (newUser : {username: string, password: string, name: string, last_name: string}) => {
     return axios.post(baseUrl, newUser).then((request) => request.data);
 };
 
