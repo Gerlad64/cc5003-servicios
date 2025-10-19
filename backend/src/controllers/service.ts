@@ -32,7 +32,7 @@ const createOne = async (req: Request, res: Response) => {
         user_id: user.id,
         name: body.name,
         is_delivery: body.is_delivery,
-        delivery_id: body.delivery_scope,
+        delivery_scope: body.delivery_scope,
         on_location: body.on_location,
         location: body.location,
         schedule: body.schedule,
