@@ -12,6 +12,8 @@ import authRouter from './routes/auth'
 import errorMiddleware from "./middlewares/errorMiddleware";
 import cookieParser from "cookie-parser";
 
+import cors from 'cors';
+
 const app = express();
 
 /* conectar mongodb */
@@ -30,6 +32,7 @@ else {
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/api/services", servicesRouter);
 app.use("/api/users", usersRouter);
