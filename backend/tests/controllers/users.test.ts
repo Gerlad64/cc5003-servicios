@@ -48,6 +48,24 @@ describe("When there is initially some users", () => {
         const usersInDb = users.map( u => u.toJSON());
         assert.strictEqual(usersInDb.length, initial.USERS.length + 1);
     })
+    test("Creation fails with proper statuscode and message if username already taken",
+        async () => {
+        const newUser = {
+            username: "jperez",
+            password: "test1234",
+            name: "José",
+            last_name: "Perez"
+        }
+        const result = await api
+            .post(base_url)
+            .send(newUser)
+            .expect(400)
+            .expect("Content-Type", /application\/json/);
+        const users = await User.find({});
+        const usersInDb = users.map( u => u.toJSON());
+        assert(result.body.error.includes("expected `username` to be unique"));
+        assert.strictEqual(usersInDb.length, initial.USERS.length);
+        })
 
 
 
