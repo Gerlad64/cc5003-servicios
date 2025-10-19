@@ -28,8 +28,13 @@ const getbyId = (id: number | number[]) => {
     }
 };
 
+const createUser = (newUser : Omit<UserData, "id">) => {
+    return axios.post(baseUrl, newUser).then((request) => request.data);
+};
+
 export default {
     getAll,
     getFiltered,
     getbyId,
+    createUser,
 };
