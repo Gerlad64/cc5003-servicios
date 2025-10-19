@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { ServiceData } from "../model/ServiceData";
+import axiosSecure from "../utils/axiosSecure";
 
 const baseUrl = "http://localhost:3001/api/services";
 
@@ -31,8 +32,8 @@ const getbyId = (id: number | number[]) => {
     }
 };
 
-const createService  = () => {
-    const request = axios.post(baseUrl);
+const createService  = (newService: Omit<ServiceData, "id">) => {
+    const request = axiosSecure.post(baseUrl, newService);
     return request.then((req) => req.data as ServiceData );
 }
 
