@@ -8,8 +8,8 @@ type Credentials = {
 
 const baseUrl = "http://localhost:3001/api/login";
 
-const login = async (credenttials: Credentials) => {
-  const response = await axios.post(baseUrl, credenttials);
+const login = async (credentials: Credentials) => {
+  const response = await axios.post(baseUrl, credentials);
 
   const csrfToken = response.headers["x-csrf-token"];
 
