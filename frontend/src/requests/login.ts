@@ -1,5 +1,5 @@
 import axios from "axios";
-// import axiosSecure from "../utils/axiosSecure";
+import axiosSecure from "../utils/axiosSecure";
 
 type Credentials = {
   username: string;
@@ -20,6 +20,22 @@ const login = async (credenttials: Credentials) => {
   return response.data
 };
 
+const restoreLogin = async () => {
+  try {
+    const response = await axiosSecure.get(baseUrl + "/me");
+    return response.data;
+  } catch {
+    return null;
+  }
+};
+
+const logout = async () => {
+  await axios.post(baseUrl + "/logout");
+  localStorage.removeItem("csrfToken");
+};
+
 export default {
   login,
+  logout,
+  restoreLogin,
 }

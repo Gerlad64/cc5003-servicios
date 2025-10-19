@@ -8,4 +8,6 @@ router.get('/', auth.login);
 
 router.post('/logout', auth.logout);
 
+router.get("/me", auth.me);
+
 export default router;

@@ -42,4 +42,10 @@ export const logout = async (req: Request, res: Response) => {
     });
 };
 
-export default { login, logout };
+export const me = async (req: Request, res: Response) => {
+    // const body = req.body;
+    const user = await User.findById(req.userId);
+    res.status(200).json(user);
+};
+
+export default { login, logout, me };
