@@ -56,7 +56,10 @@ const serviceSchema = new mongoose.Schema<ServiceData>({
         required: true,
         ref: "User",
     },
-    name: String,
+    name: {
+        type: String,
+        required: true,
+    },
     rating: {
         type: Number,
         required: true,
