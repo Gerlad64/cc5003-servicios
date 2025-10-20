@@ -52,6 +52,8 @@ describe("When there is initially some services", () => {
 
 describe("When there is initially one user logged in", () => {
     beforeEach(async () => {
+        await User.deleteMany({});
+        await Service.deleteMany({});
         const passwordHash = await bcrypt.hash("sekret", 10);
         const newUser = new User({
             username: "root",
@@ -64,8 +66,9 @@ describe("When there is initially one user logged in", () => {
 
     afterEach(async () => await api.post("/api/login/logout"));
 
-    test("A valid service can be created", async () => {
+    test("A valid service can be created properly", async () => {
         const initialServices = await db.services();
+        const userInitialServices = (await User.findOne({username: "root"}))!.services;
         const service = {
             name: "Clases particulares MATES",
             is_delivery: true,
@@ -83,9 +86,13 @@ describe("When there is initially one user logged in", () => {
             .set('Cookie', `token=${token}`)
             .set('X-CSRF-Token', csrfToken)
             .send(service)
-            .expect(201);
+            .expect(201)
+            .expect("Content-Type", /application\/json/);
         const finalServices = await db.services();
+        const userFinalServices = (await User.findOne({username: "root"}))!.services;
         assert.strictEqual(finalServices.length, initialServices.length + 1);
+        assert.strictEqual(userFinalServices.length, userInitialServices.length + 1);
+        assert.strictEqual(userFinalServices.pop()!.toString(), result.body.id);
     })
 })
 
