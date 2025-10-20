@@ -1,5 +1,6 @@
 import Service from "../src/models/service";
 import User from "../src/models/user";
+import services from "../src/routes/services";
 
 const USERS =
     [
@@ -114,4 +115,14 @@ const loadServices = async () => {
     );
 }
 
-export default {loadServices, loadUsers, USERS, SERVICES};
+const usersInDb = async () => {
+    const users = await User.find({});
+    return users.map(u => u.toJSON());
+}
+const servicesInDb = async () => {
+    const services = await Service.find({});
+    return services.map(s => s.toJSON());
+}
+
+export const initial = { loadServices, loadUsers, USERS, SERVICES };
+export const db = { users: usersInDb, services: servicesInDb };
