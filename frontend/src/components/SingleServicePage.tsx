@@ -5,6 +5,7 @@ import type { ServiceData } from '../model/ServiceData';
 import type { UserData } from '../model/UserData';
 import serviceReq from '../requests/services';
 import userReq from '../requests/users';
+import { ServiceReviews } from "./ServiceReviews";
 
 type User = Pick<UserData, "id" | "name" | "profile_pic">;
 
@@ -105,6 +106,8 @@ export function SingleServicePage() {
                     profile_pic: user.profile_pic 
                 }}
             />
+            <hr />
+            <ServiceReviews serviceId={id!} />
         </div>
     )
 };

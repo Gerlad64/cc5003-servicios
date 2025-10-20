@@ -56,6 +56,32 @@ export function Services() {
         console.log('Filtros aplicados:', newFilters);
     };
 
+    // Función para filtrar servicios
+    const filterServices = (services: ServiceData[], filters: FilterState): ServiceData[] => {
+        return services.filter((service) => {
+            // Filtro por texto de búsqueda
+            if (filters.searchText && !service.name.toLowerCase().includes(filters.searchText.toLowerCase())) {
+                return false;
+            }
+
+            // Filtro por ubicación
+            if (filters.location && service.location !== filters.location) {
+                return false;
+            }
+
+            // Filtro por rating
+            if (filters.rating && service.rating < Number(filters.rating)) {
+                return false;
+            }
+
+            // Otros filtros según sea necesario...
+            
+            return true;
+        });
+    };
+
+    const filteredServices = filterServices(services, filters);
+
     if (loading) {
         return <div>Cargando servicios...</div>
     };
@@ -78,11 +104,11 @@ export function Services() {
             <hr />
 
             {/* Contador de resultados */}
-            <p>Mostrando {services.length} servicios disponibles</p>
+            <p>Mostrando {filteredServices.length} servicios disponibles</p>
 
             {/* Lista de servicios */}
             <div>
-                {services.map((service) => {
+                {filteredServices.map((service) => {
                     const user = users.find((u) => String(u.id) === String(service.user_id));
                     
                     return (

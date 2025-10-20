@@ -32,6 +32,7 @@ const LoginForm = () => {
   return (
     <div>
       <h1> Login </h1>
+      <a href="/"> « Volver al inicio </a>
       <form onSubmit={handleSubmit}>
         <div>
           username

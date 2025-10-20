@@ -37,6 +37,7 @@ const RegisterForm = () => {
   return (
     <div>
       <h1> Register </h1>
+      <a href="/"> « Volver al inicio</a>
       <form onSubmit={handleSubmit}>
         <div>
           username

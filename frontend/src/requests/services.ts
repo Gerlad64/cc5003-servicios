@@ -37,9 +37,15 @@ const createService  = (newService: Omit<ServiceData, "id">) => {
     return request.then((req) => req.data as ServiceData );
 }
 
+const create = async (serviceData: any) => {
+  const response = await axios.post(baseUrl, serviceData);
+  return response.data;
+};
+
 export default {
     getAll,
     getFiltered,
     getbyId,
     createService,
+    create,
 };
