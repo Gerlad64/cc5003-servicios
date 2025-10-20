@@ -2,7 +2,7 @@ import axios from "axios";
 import type { ServiceData } from "../model/ServiceData";
 import axiosSecure from "../utils/axiosSecure";
 
-const baseUrl = "http://localhost:3001/api/services";
+const baseUrl = "/api/services";
 
 /**
  * trae del servidor todos los servicios

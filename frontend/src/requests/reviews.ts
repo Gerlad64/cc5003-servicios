@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { ReviewData } from "../model/ReviewData";
 
-const baseUrl = "http://localhost:3001/api/reviews";
+const baseUrl = "/api/reviews";
 
 /**
  * Obtiene todas las reviews de un servicio específico
