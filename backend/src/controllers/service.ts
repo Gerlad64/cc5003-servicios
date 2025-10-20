@@ -25,8 +25,8 @@ const createOne = async (req: Request, res: Response) => {
     const user = await User.findById(req.userId);
     if ( !user )
         return res.status(400).json({ error: " user not found " });
-    else if (! body )
-        return res.status(400).json({ error: " content not found " });
+    else if (! body.name )
+        return res.status(400).json({ error: " titulo del servicio no encontrado " });
 
     const service = {
         user_id: user.id,
