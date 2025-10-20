@@ -23,10 +23,10 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
       const hashed = await bcrypt.hash(password, saltRounds);
 
       const user = new User({
-          username,
-          hashed,
-          name,
-          last_name,
+          username: username,
+          password: hashed,
+          name: name,
+          last_name: last_name,
       })
       const savedUser = await user.save();
 
