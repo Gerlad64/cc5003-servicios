@@ -1,7 +1,7 @@
 import app from "../../src/app"
 import {test, after, beforeEach, describe, afterEach} from "node:test"
 import assert from "node:assert";
-import initial from '../test_utils';
+import { initial } from '../test_utils';
 import supertest from "supertest";
 import mongoose from "mongoose";
 import User from "../../src/models/user";
@@ -18,10 +18,9 @@ const user = {
 }
 
 const login = async (user: { username: string; password: string }) => {
-    const result = await api
+    return await api
         .post(base_url)
         .send(user);
-    return result;
 };
 
 describe("When there's initially some users in db", () => {
@@ -63,6 +62,12 @@ describe("When there's initially some users in db", () => {
             assert.strictEqual(payload.username, user.username);
             assert.strictEqual(payload.csrf, csrfToken);
         });
+
+        test("Loggout works successfully", async () => {
+            await login(user);
+            const result = await api.post(base_url+"/logout").expect(200)
+            assert(result.body.message === "Logged out successfully");
+        })
     });
     describe("When login fails with invalid credentials", () => {
         test("Check status code", async () => {
