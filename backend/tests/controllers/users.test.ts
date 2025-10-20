@@ -1,7 +1,7 @@
 import app from "../../src/app"
 import {test, after, beforeEach, describe, afterEach} from "node:test"
 import assert from "node:assert";
-import initial from '../test_utils';
+import {db, initial} from '../test_utils';
 import supertest from "supertest";
 import mongoose from "mongoose";
 import User from "../../src/models/user";
@@ -43,8 +43,7 @@ describe("When there is initially some users", () => {
             .expect(201)
             .expect("Content-Type", /application\/json/);
 
-        const users = await User.find({})
-        const usersInDb = users.map( u => u.toJSON());
+        const usersInDb = await db.users();
         assert.strictEqual(usersInDb.length, initial.USERS.length + 1);
     })
     test("Creation fails with proper statuscode and message if username already taken",
@@ -60,8 +59,8 @@ describe("When there is initially some users", () => {
             .send(newUser)
             .expect(400)
             .expect("Content-Type", /application\/json/);
-        const users = await User.find({});
-        const usersInDb = users.map( u => u.toJSON());
+
+        const usersInDb = await db.users();
         assert(result.body.error.includes("expected `username` to be unique"));
         assert.strictEqual(usersInDb.length, initial.USERS.length);
         })
