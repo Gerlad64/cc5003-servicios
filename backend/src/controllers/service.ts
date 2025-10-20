@@ -42,6 +42,7 @@ const createOne = async (req: Request, res: Response) => {
     }
     const savedService = await new Service(service).save();
     user.services.push(savedService.id);
+    await user.save();
     return res.status(201).json(savedService);
 }
 
