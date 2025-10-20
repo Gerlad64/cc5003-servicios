@@ -108,11 +108,16 @@ const loadUsers = async () => {
 const loadServices = async () => {
     await Service.deleteMany({})
     const users = await User.find({});
-    await Service.insertMany(
+    const services = await Service.insertMany(
         SERVICES
             .slice(0, users.length)
             .map((s, i) => ({ ...s, user_id: users[i]._id }))
     );
+    services.map((s,i) => {
+        const user = users[i];
+        user.services.push(s.id);
+        user.save();
+    });
 }
 
 const usersInDb = async () => {
