@@ -41,6 +41,7 @@ const createOne = async (req: Request, res: Response) => {
         contact: body.contact,
     }
     const savedService = await new Service(service).save();
+    user.services.push(savedService.id);
     return res.status(201).json(savedService);
 }
 
