@@ -6,6 +6,7 @@ import { SingleServicePage } from './components/SingleServicePage';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 import CreateServiceForm from './components/CreateServiceForm';
+import UserPage from './components/UserPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/services/create" element={<CreateServiceForm />} />
+          <Route path="/me" element={<UserPage />} />
         </Routes>
       </div>
     </Router>
