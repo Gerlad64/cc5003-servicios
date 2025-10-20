@@ -20,7 +20,7 @@ const getFiltered = (filter: (u: ServiceData) => boolean) => {
     });
 };
 
-const getbyId = (id: number | number[]) => {
+const getbyId = (id: string | string[]) => {
     if (Array.isArray(id)) {
         // Si es un array, usar filtro para múltiples IDs
         const filter = (s: ServiceData) => id.includes(s.id);

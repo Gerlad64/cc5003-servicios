@@ -15,9 +15,9 @@ export interface Contact {
  */
 export interface ServiceData {
     /** identificador único del servicio */
-    id: number; 
+    id: string;
     /** identificador único del usuario que ofrece el servicio */
-    user_id: number;
+    user_id: string;
     /** nombre del servicio que se está prestando */
     name: string;
     /** Calificación del servicio */

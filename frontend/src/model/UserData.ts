@@ -6,13 +6,13 @@
  */
 export interface UserData {
     /** identificador único de usuario */
-    id: number;
+    id: string;
     /** nombre del usuario */
     name: string;
     /** apellido del usuario */
     last_name: string;
     /** id's de los servicios que ofrece */
-    services: number[];
+    services: string[];
     /** url a foto de perfil */
     profile_pic?: string;
     /** la "biografía" del usuario */

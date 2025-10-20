@@ -16,7 +16,7 @@ const getFiltered = (filter: (u: UserData) => boolean) => {
     });
 };
 
-const getbyId = (id: number | number[]) => {
+const getbyId = (id: string | string[]) => {
     if (Array.isArray(id)) {
         // Si es un array, usar filtro para múltiples IDs
         const filter = (u: UserData) => id.includes(u.id);

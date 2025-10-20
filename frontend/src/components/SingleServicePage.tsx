@@ -28,8 +28,8 @@ export function SingleServicePage() {
             return;
         };
 
-        const serviceId = parseInt(id);
-        if (isNaN(serviceId)) {
+        const serviceId = id;
+        if (!serviceId) {
             setError('ID de servicio no válido');
             setLoading(false);
             return;
