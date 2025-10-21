@@ -93,39 +93,90 @@ export function Services() {
     return (
         <div>
             {/* Header con navegación */}
-            <h1>Lista de Servicios</h1>
-            <a href="/">Volver al inicio</a>
+            <div style={{ padding: '20px', borderBottom: '1px solid #ddd' }}>
+                <h1>Lista de Servicios</h1>
+                <Link to="/" style={{ textDecoration: 'none', color: '#007bff' }}>
+                    « Volver al inicio
+                </Link>
+            </div>
 
-            <hr />
+            {/* Layout principal con sidebar */}
+            <div style={{ display: 'flex', minHeight: 'calc(100vh - 100px)' }}>
+                {/* Sidebar de filtros (izquierda) */}
+                <aside style={{
+                    width: '280px',
+                    borderRight: '1px solid #ddd',
+                    padding: '20px',
+                    backgroundColor: '#f8f9fa',
+                    overflowY: 'auto'
+                }}>
+                    <SearchFilters onFiltersChange={handleFiltersChange} />
+                </aside>
 
-            {/* Componente de filtros */}
-            <SearchFilters onFiltersChange={handleFiltersChange} />
+                {/* Contenido principal (derecha) */}
+                <main style={{
+                    flex: 1,
+                    padding: '20px',
+                    overflowY: 'auto'
+                }}>
+                    {/* Contador de resultados */}
+                    <p style={{ 
+                        marginBottom: '20px',
+                        fontSize: '16px',
+                        color: '#666'
+                    }}>
+                        Mostrando <strong>{filteredServices.length}</strong> servicios disponibles
+                    </p>
 
-            <hr />
-
-            {/* Contador de resultados */}
-            <p>Mostrando {filteredServices.length} servicios disponibles</p>
-
-            {/* Lista de servicios */}
-            <div>
-                {filteredServices.map((service) => {
-                    const user = users.find((u) => String(u.id) === String(service.user_id));
-                    
-                    return (
-                        <div key={service.id}>
-                            <h3>
-                                <Link to={`/services/${service.id}`}>
-                                    {service.name}
-                                </Link>
-                            </h3>
-                            <p>Por: {user ? user.name : 'Usuario desconocido'}</p>
-                            <p>Ubicación: {service.location}</p>
-                            <p>Calificación: {service.rating}/5</p>
-                            <p>Precio: {service.pricing}</p>
-                            <hr />
-                        </div>
-                    )
-                })}
+                    {/* Lista de servicios */}
+                    <div>
+                        {filteredServices.length === 0 ? (
+                            <p>No se encontraron servicios con los filtros aplicados</p>
+                        ) : (
+                            filteredServices.map((service) => {
+                                const user = users.find((u) => String(u.id) === String(service.user_id));
+                                
+                                return (
+                                    <div 
+                                        key={service.id}
+                                        style={{
+                                            border: '1px solid #ddd',
+                                            borderRadius: '8px',
+                                            padding: '15px',
+                                            marginBottom: '15px',
+                                            backgroundColor: '#fff',
+                                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                        }}
+                                    >
+                                        <h3 style={{ marginTop: 0 }}>
+                                            <Link 
+                                                to={`/services/${service.id}`}
+                                                style={{ 
+                                                    textDecoration: 'none',
+                                                    color: '#007bff'
+                                                }}
+                                            >
+                                                {service.name}
+                                            </Link>
+                                        </h3>
+                                        <p style={{ margin: '5px 0', color: '#666' }}>
+                                            👤 Por: {user ? user.name : 'Usuario desconocido'}
+                                        </p>
+                                        <p style={{ margin: '5px 0', color: '#666' }}>
+                                            📍 Ubicación: {service.location}
+                                        </p>
+                                        <p style={{ margin: '5px 0', color: '#666' }}>
+                                            ⭐ Calificación: {service.rating}/5
+                                        </p>
+                                        <p style={{ margin: '5px 0', color: '#666', fontWeight: 'bold' }}>
+                                            💰 Precio: {service.pricing}
+                                        </p>
+                                    </div>
+                                )
+                            })
+                        )}
+                    </div>
+                </main>
             </div>
         </div>
     )
