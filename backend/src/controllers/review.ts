@@ -18,7 +18,26 @@ const getByServiceId = async (req: Request, res: Response) => {
 }
 
 const createOne = async (req: Request, res: Response) => {
+    const body = req.body;
+    const user = await User.findById(req.userId);
+    const service = await Service.findById(req.params.id);
+    if ( !user )
+        return res.status(400).json({ error: " user not found " });
+    else if (! service )
+        return res.status(400).json({ error: " service not found " });
+    else if (! body.rating )
+        return res.status(400).json({ error: "missing required field 'rating'" });
 
+    const review = {
+        service_id: service._id,
+        user_id: user.id,
+        rating: body.rating,
+        comment: body.comment,
+    }
+    const savedReview = await new Review(review).save();
+    /** TODO Actualizar Rating del servicio */
+
+    return res.status(200).json(savedReview);
 }
 
 export default { getAll, getByServiceId, createOne };
