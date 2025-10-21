@@ -35,6 +35,7 @@ En este hito, se incorporan los siguientes endpoints principales
 - */api/users*
 - */api/services*
 - */api/login*
+- */api/reviews*
 
 ##### */api/users*
 
@@ -45,13 +46,18 @@ En este hito, se incorporan los siguientes endpoints principales
 
 - get('/'): Trae todos los servicios en formato json.
 - post('/'): Crea un nuevo servicio si el usuario está autenticado.
-- get('/:id): Trae un servicio según su id.
+- get('/:id'): Trae un servicio según su id.
 
 ##### */api/login*
 
 - post('/'): Se intenta iniciar sesión con los datos entregados.
 - post('/logout'): Se cierra la sesión.
 
+##### */api/reviews*
+
+- get('/'): Trae todas las reseñas creadas de todos los servicios
+- get('/:id'): Trae las reseñas asociadas al servicio con id entregado como parámetro.
+- post('/:id'): Crea una nueva reseña al servicio con id entregado como parámetro.
 #### Variables de entorno
 
 - PORT=3001
