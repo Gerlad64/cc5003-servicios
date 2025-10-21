@@ -51,3 +51,13 @@ En este hito, se incorporan los siguientes endpoints principales
 
 - post('/'): Se intenta iniciar sesión con los datos entregados.
 - post('/logout'): Se cierra la sesión.
+
+#### Variables de entorno
+
+- PORT=3001
+- HOST=localhost
+- MONGODB_URI=mongodb://localhost:27017
+- TEST_MONGODB_URI=mongodb://localhost:27017
+- MONGODB_DBNAME= serviciosCLdb
+- TEST_MONGODB_DBNAME= test_serviciosCLdb
+- JWT_SECRET=miclavesecreta
