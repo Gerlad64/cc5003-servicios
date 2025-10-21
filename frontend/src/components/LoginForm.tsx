@@ -31,18 +31,18 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h1> Login </h1>
+      <h1> Iniciar Sesión </h1>
       <a href="/"> « Volver al inicio </a>
       <form onSubmit={handleSubmit}>
         <div>
-          username
+          Nombre de usuario
           <input value={username} onChange={handleUsernameChange}/>
         </div>
         <div>
-          password
+          Contraseña
           <input value={password} onChange={handlePasswordChange}/>
         </div>
-        <button type="submit"> login </button>
+        <button type="submit"> Iniciar Sesión </button>
       </form>
     </div>
   );

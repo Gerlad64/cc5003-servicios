@@ -36,26 +36,26 @@ const RegisterForm = () => {
 
   return (
     <div>
-      <h1> Register </h1>
+      <h1> Registrarse </h1>
       <a href="/"> « Volver al inicio</a>
       <form onSubmit={handleSubmit}>
         <div>
-          username
+          Nombre de usuario
           <input value={username} onChange={handleUsernameChange}/>
         </div>
         <div>
-          firstname
+          Nombre 
           <input value={firstname} onChange={handleFirstnameChange}/>
         </div>
         <div>
-          lastname
+          Apellido
           <input value={lastname} onChange={handleLastnameChange}/>
         </div>
         <div>
-          password
+          Contraseña
           <input value={password} onChange={handlePasswordChange}/>
         </div>
-        <button type="submit"> register </button>
+        <button type="submit"> Registrarse </button>
       </form>
     </div>
   );
