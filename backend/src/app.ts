@@ -8,6 +8,7 @@ import config from "./utils/config";
 import servicesRouter from './routes/services'
 import usersRouter from './routes/users'
 import authRouter from './routes/auth'
+import reviewsRouter from './routes/reviews'
 /* middlewares */
 import errorMiddleware from "./middlewares/errorMiddleware";
 import cookieParser from "cookie-parser";
@@ -37,6 +38,7 @@ app.use(cors());
 app.use("/api/services", servicesRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", authRouter)
+app.use("/api/reviews", reviewsRouter);
 
 app.use(errorMiddleware.unknownEndpoint);
 app.use(errorMiddleware.errorHandler);
