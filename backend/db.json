@@ -1,0 +1,90 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "name": "Clases de Programación",
+      "rating": 5,
+      "is_delivery": false,
+      "delivery_scope": "",
+      "on_location": true,
+      "location": "Santiago Centro",
+      "schedule": "8:00-18:00",
+      "description": "Ofrezco clases personalizadas de programación en múltiples lenguajes. Especialista en JavaScript, Python y React. Metodología práctica con proyectos reales.",
+      "pricing": "$15.000/hora",
+      "contact": {
+        "whatsapp": "+56 9 1234 5678",
+        "instagram": "programacion_chile",
+        "telegram": "programador_pro",
+        "mail": "clases@programacion.com"
+      }
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "name": "Diseño Gráfico Freelance",
+      "rating": 4,
+      "is_delivery": true,
+      "delivery_scope": "Región Metropolitana",
+      "on_location": false,
+      "location": "Las Condes",
+      "schedule": "9:00-17:00",
+      "description": "Servicios de diseño gráfico profesional: logos, branding, diseño web, material publicitario. Más de 5 años de experiencia trabajando con empresas y startups.",
+      "pricing": "$25.000 por proyecto",
+      "contact": {
+        "whatsapp": "+56 9 8765 4321",
+        "instagram": "diseno_creativo_cl",
+        "telegram": "diseñador_grafico",
+        "mail": "contacto@disenocreativo.cl"
+      }
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "name": "Reparación de Computadores",
+      "rating": 5,
+      "is_delivery": true,
+      "delivery_scope": "Santiago y alrededores",
+      "on_location": true,
+      "location": "Providencia",
+      "schedule": "10:00-19:00",
+      "description": "Reparación y mantención de computadores, laptops y dispositivos móviles. Diagnóstico gratuito. Servicio a domicilio disponible. Garantía en todos los trabajos.",
+      "pricing": "Desde $10.000",
+      "contact": {
+        "whatsapp": "+56 9 5555 1234",
+        "instagram": "tecnico_computadores",
+        "telegram": "reparaciones_tech",
+        "mail": "soporte@tecnico.cl"
+      }
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "María",
+      "last_name": "González",
+      "services": [1],
+      "profile_pic": "/profpic.png",
+      "biography": "Desarrolladora Full Stack con 8 años de experiencia. Apasionada por enseñar y compartir conocimientos.",
+      "rating": 5
+    },
+    {
+      "id": 2,
+      "name": "Carlos",
+      "last_name": "Rodríguez",
+      "services": [2],
+      "profile_pic": "/profpic.png",
+      "biography": "Diseñador gráfico especializado en identidad corporativa y marketing digital.",
+      "rating": 4
+    },
+    {
+      "id": 3,
+      "name": "Ana",
+      "last_name": "López",
+      "services": [3],
+      "profile_pic": "/profpic.png",
+      "biography": "Técnica en computación con certificaciones internacionales. Especialista en hardware y software.",
+      "rating": 5
+    }
+  ]
+}
