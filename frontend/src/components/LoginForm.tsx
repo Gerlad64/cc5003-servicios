@@ -1,26 +1,26 @@
 import { useState } from "react";
 import loginService from "../requests/login";
-import type { UserData } from "../model/UserData";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+interface LoginProps {
+    setUser: (user: {username: string}) => void;
+}
+
+const LoginForm = ({setUser} : LoginProps) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [user, setUser] = useState<UserData | null>(null);
-
   const navigate = useNavigate();
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const user = await loginService.login({
+      const user =await loginService.login({
         username,
         password,
       });
       setUser(user);
-      navigate("/me")
+      navigate("/");
     } catch (error) {
-      console.log(user);
       console.log(error)
     };
   }

@@ -29,7 +29,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/services/:id" element={<SingleServicePage />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login" element={<LoginForm setUser={(user: {username: string}) => setUser(user.username)} />} />
           <Route path="/services/create" element={<CreateServiceForm />} />
           <Route path="/me" element={<UserPage />} />
         </Routes>
