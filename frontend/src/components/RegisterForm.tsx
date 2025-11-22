@@ -1,11 +1,15 @@
 import { useState } from "react";
 import userService from "../requests/users";
+import {useNavigate} from "react-router-dom";
+
 
 const RegisterForm = () => {
   const [username, setUsername] = useState<string>("");
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>();
+  const navigate = useNavigate();
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,7 +19,13 @@ const RegisterForm = () => {
       name: firstname,
       last_name: lastname,
     };
-    userService.createUser(userObject);
+    userService.createUser(userObject)
+        .then(() => {
+            navigate('/login');
+        })
+        .catch((error) => {
+        setErrorMessage(error.response?.data?.error);
+    });
   }
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +67,7 @@ const RegisterForm = () => {
         </div>
         <button type="submit"> Registrarse </button>
       </form>
+        {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 };
