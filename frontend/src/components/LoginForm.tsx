@@ -40,11 +40,11 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit}>
         <div>
           Nombre de usuario
-          <input value={username} onChange={handleUsernameChange}/>
+          <input aria-label="username" id="username" name="username" value={username} onChange={handleUsernameChange}/>
         </div>
         <div>
           Contraseña
-          <input value={password} onChange={handlePasswordChange}/>
+          <input aria-label="password" id="password" name="password" value={password} onChange={handlePasswordChange}/>
         </div>
         <button type="submit"> Iniciar Sesión </button>
       </form>

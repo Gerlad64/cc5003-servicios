@@ -14,4 +14,13 @@ test.describe("Login tests", () => {
 
     await page.goto("/");
   });
-})
+
+  test("Successful login", async ({ page }) => {
+    await page.goto("/login");
+
+    await page.getByLabel("username").fill("esteban.lopez");
+    await page.getByLabel("password").fill("password");
+    await page.getByRole("button").click();
+    await expect(page.getByText("Esteban")).toBeVisible();
+  });
+});

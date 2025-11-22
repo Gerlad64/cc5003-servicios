@@ -3,6 +3,6 @@ import testing from '../controllers/testing'
 
 const router = express.Router();
 
-router.post("/", testing.reset);
+router.post("/reset", testing.reset);
 
 export default router;
