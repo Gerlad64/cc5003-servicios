@@ -23,10 +23,10 @@ interface ServiceData {
     user_id: mongoose.Types.ObjectId;
     /** nombre del servicio que se está prestando */
     name: string;
-    /** categoría del servicio */
-    category: string;
     /** Calificación del servicio */
     rating: number;
+    /** categoría del servicio */
+    category?: string;
     /** true si el servicio se ofrece a domicilio, false si no. */
     is_delivery: boolean;
     /** alcance del servicio delivery */

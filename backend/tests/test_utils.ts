@@ -1,6 +1,9 @@
 import Service from "../src/models/service";
 import User from "../src/models/user";
 import services from "../src/routes/services";
+import { Test } from "supertest";
+import TestAgent from "supertest/lib/agent";
+import Review from "../src/models/review";
 
 const USERS =
     [
@@ -71,7 +74,7 @@ const SERVICES =
         },
         {
             "name": "Paseo de perros",
-            "rating": 4.2,
+            "rating": 0.0,
             "is_delivery": true,
             "delivery_scope": ["La Reina", "Peñalolén", "Ñuñoa"],
             "on_location": false,
@@ -128,6 +131,48 @@ const servicesInDb = async () => {
     const services = await Service.find({});
     return services.map(s => s.toJSON());
 }
+
+const login = async (api: TestAgent<Test>, user: { username: string; password: string }) => {
+    const response = await api
+        .post("/api/login")
+        .send(user);
+    const csrfToken = response.headers["x-csrf-token"];
+    const setCookie = response.headers["set-cookie"];
+    //assert(Array.isArray(setCookie), "Set-Cookie header missing");
+    const jwtValue = setCookie[0].match(/token=([^;]+)/)?.[1];
+    if (!jwtValue || !csrfToken) throw new Error("Login failed: Missing tokens");
+    return { csrfToken, token: jwtValue };
+};
+// authAgent.ts
+
+export interface IAuthRequest {
+    get: (url: string) => Test;
+    post: (url: string) => Test;
+    put: (url: string) => Test;
+    delete: (url: string) => Test;
+    patch: (url: string) => Test;
+    tokens: { csrfToken: string; token: string }; // Útil si necesitas acceder a los tokens crudos
+}
+
+export const authRequest = async (
+    api: TestAgent<Test>,
+    user: { username: string; password: string }
+): Promise<IAuthRequest> => {
+    const { csrfToken, token } = await login(api, user);
+
+    const commonHeaders = {
+        'Cookie': `token=${token}`,
+        'X-CSRF-Token': csrfToken
+    };
+    return {
+        get: (url: string) => api.get(url).set(commonHeaders),
+        post: (url: string) => api.post(url).set(commonHeaders),
+        put: (url: string) => api.put(url).set(commonHeaders),
+        delete: (url: string) => api.delete(url).set(commonHeaders),
+        patch: (url: string) => api.patch(url).set(commonHeaders),
+        tokens: { csrfToken, token }
+    };
+};
 
 export const initial = { loadServices, loadUsers, USERS, SERVICES };
 export const db = { users: usersInDb, services: servicesInDb };

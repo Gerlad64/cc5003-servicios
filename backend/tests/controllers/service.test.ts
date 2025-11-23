@@ -2,7 +2,7 @@
 import app from "../../src/app"
 import {test, after, beforeEach, describe, afterEach} from "node:test"
 import assert from "node:assert";
-import {db, initial} from '../test_utils';
+import {db, initial, authRequest, IAuthRequest} from '../test_utils';
 import supertest from "supertest";
 import mongoose from "mongoose";
 import User from "../../src/models/user";
@@ -11,17 +11,6 @@ import bcrypt from "bcrypt";
 
 const api = supertest(app);
 const base_url = "/api/services"
-
-const login = async (user: { username: string; password: string }) => {
-    const response = await api
-        .post("/api/login")
-        .send(user);
-    const csrfToken = response.headers["x-csrf-token"];
-    const setCookie = response.headers["set-cookie"];
-    assert(Array.isArray(setCookie), "Set-Cookie header missing");
-    const jwtValue = setCookie[0].match(/token=([^;]+)/)?.[1];
-    return { csrfToken, token: jwtValue };
-};
 
 
 describe("When there is initially some services", () => {
@@ -51,6 +40,7 @@ describe("When there is initially some services", () => {
 });
 
 describe("When there is initially one user logged in", () => {
+    let authApi: IAuthRequest;
     beforeEach(async () => {
         await User.deleteMany({});
         await Service.deleteMany({});
@@ -62,6 +52,7 @@ describe("When there is initially one user logged in", () => {
             last_name: "Rumirez",
         });
         await newUser.save();
+        authApi = await authRequest(api, {username: "root", password: "sekret"});
     });
 
     afterEach(async () => await api.post("/api/login/logout"));
@@ -80,11 +71,8 @@ describe("When there is initially one user logged in", () => {
             pricing: "10lkas la hora",
             contact: {whatsapp: "+56912345678"}
         };
-        const {csrfToken, token} = await login({username: "root", password: "sekret"});
-        const result = await api
+        const result = await authApi
             .post(base_url)
-            .set('Cookie', `token=${token}`)
-            .set('X-CSRF-Token', csrfToken)
             .send(service)
             .expect(201)
             .expect("Content-Type", /application\/json/);
