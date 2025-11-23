@@ -15,6 +15,7 @@ import errorMiddleware from "./middlewares/errorMiddleware";
 import cookieParser from "cookie-parser";
 
 import cors from 'cors';
+import path from 'path';
 
 const app = express();
 
@@ -34,13 +35,31 @@ else {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
+// CORS configuration
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' 
+        ? ['http://fullstack.dcc.uchile.cl:7104', 'http://fullstack.dcc.uchile.cl']
+        : 'http://localhost:5173',
+    credentials: true
+};
+app.use(cors(corsOptions));
+
+// API routes
 app.use("/api/services", servicesRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", authRouter)
 app.use("/api/reviews", reviewsRouter);
 app.use("/api/testing", testingRouter);
+
+// Serve static files from frontend build in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+    
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+    });
+}
 
 app.use(errorMiddleware.unknownEndpoint);
 app.use(errorMiddleware.errorHandler);
