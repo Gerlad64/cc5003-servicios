@@ -31,6 +31,7 @@ const createOne = async (req: Request, res: Response) => {
     const service = {
         user_id: user.id,
         name: body.name,
+        category: body.category,
         is_delivery: body.is_delivery,
         delivery_scope: body.delivery_scope,
         on_location: body.on_location,

@@ -27,6 +27,7 @@ interface ServiceData {
     category: string;
     /** Calificación del servicio */
     rating: number;
+    category?: string;
     /** true si el servicio se ofrece a domicilio, false si no. */
     is_delivery: boolean;
     /** alcance del servicio delivery */
@@ -72,6 +73,10 @@ const serviceSchema = new mongoose.Schema<ServiceData>({
         default: 0.0,
         min: 0.0,
         max: 5.0,
+    },
+    category: {
+        type: String,
+        required: false,
     },
     on_location: Boolean,
     is_delivery: Boolean,
