@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosSecure from "../utils/axiosSecure";
 import type { ReviewData } from "../model/ReviewData";
 
 const baseUrl = "/api/reviews";
@@ -25,8 +26,9 @@ const getByServiceId = async (serviceId: string): Promise<ReviewData[]> => {
  * @param reviewData - Datos de la review a crear
  * @returns La review creada
  */
-const create = async (reviewData: Omit<ReviewData, "id" | "created_at">): Promise<ReviewData> => {
-  const response = await axios.post(baseUrl, reviewData);
+const create = async (reviewData: Omit<ReviewData, "id" | "createdAt">): Promise<ReviewData> => {
+  const { service_id, ...data } = reviewData;
+  const response = await axiosSecure.post(`${baseUrl}/${service_id}`, data);
   return response.data;
 };
 

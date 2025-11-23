@@ -111,7 +111,7 @@ export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
               </div>
               <p>{review.comment}</p>
               <small>
-                {new Date(review.created_at).toLocaleDateString()}
+                {new Date(review.createdAt).toLocaleDateString()}
               </small>
             </div>
           ))

@@ -45,6 +45,17 @@ const reviewSchema = new Schema<ReviewData>({
     }
 }, { timestamps: true });
 
+reviewSchema.set("toJSON", {
+    transform: (
+        _,
+        returnedObject: { id?: string; _id?: mongoose.Types.ObjectId; __v?: number }
+    ) => {
+        returnedObject.id = returnedObject._id?.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+    },
+});
+
 const Review = mongoose.model<ReviewData>("Review", reviewSchema);
 
 export default Review;
