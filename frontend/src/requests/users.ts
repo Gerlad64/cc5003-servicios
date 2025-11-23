@@ -5,7 +5,7 @@ const baseUrl = "/api/users";
 
 const getAll = () => {
     const request = axios.get(baseUrl);
-    return request.then((req) => req.data);
+    return request.then((req) => req.data as UserData[]);
 }
 
 const getFiltered = (filter: (u: UserData) => boolean) => {
