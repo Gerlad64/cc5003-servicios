@@ -6,6 +6,16 @@ import type { UserData } from '../model/UserData';
 import serviceReq from '../requests/services';
 import userReq from '../requests/users';
 import { ServiceReviews } from "./ServiceReviews";
+import { 
+    Container, 
+    Box, 
+    Button, 
+    CircularProgress, 
+    Alert, 
+    Paper,
+    Divider 
+} from '@mui/material';
+import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
 type User = Pick<UserData, "id" | "name" | "profile_pic">;
 
@@ -69,45 +79,79 @@ export function SingleServicePage() {
     }, [id]);
 
     if (loading) {
-        return <div>Cargando servicio...</div>
-    };
+        return (
+            <Box 
+                sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    minHeight: '80vh' 
+                }}
+            >
+                <CircularProgress size={60} />
+            </Box>
+        );
+    }
 
     if (error) {
         return (
-            <div>
-                <p>Error: {error}</p>
-                <button onClick={() => navigate('/services')}>
+            <Container maxWidth="lg" sx={{ py: 8 }}>
+                <Alert severity="error" sx={{ mb: 3 }}>
+                    {error}
+                </Alert>
+                <Button 
+                    variant="contained" 
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => navigate('/services')}
+                >
                     Volver a servicios
-                </button>
-            </div>
-        )
-    };
+                </Button>
+            </Container>
+        );
+    }
 
     if (!service || !user) {
         return (
-            <div>
-                <p>Servicio no encontrado</p>
-                <button onClick={() => navigate('/services')}>
+            <Container maxWidth="lg" sx={{ py: 8 }}>
+                <Alert severity="warning" sx={{ mb: 3 }}>
+                    Servicio no encontrado
+                </Alert>
+                <Button 
+                    variant="contained" 
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => navigate('/services')}
+                >
                     Volver a servicios
-                </button>
-            </div>
-        )
-    };
+                </Button>
+            </Container>
+        );
+    }
 
     return (
-        <div>
-            <button onClick={() => navigate('/services')} style={{ marginBottom: '20px' }}>
-                ← Volver a servicios
-            </button>
-            <SingleService 
-                service={service} 
-                user={{ 
-                    name: user.name, 
-                    profile_pic: user.profile_pic 
-                }}
-            />
-            <hr />
-            <ServiceReviews serviceId={id!} />
-        </div>
+        <Box sx={{ bgcolor: '#f5f5f5', minHeight: '100vh', py: 4 }}>
+            <Container maxWidth="lg">
+                <Button 
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => navigate('/services')}
+                    sx={{ mb: 3 }}
+                >
+                    Volver a servicios
+                </Button>
+                
+                <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+                    <SingleService 
+                        service={service} 
+                        user={{ 
+                            name: user.name, 
+                            profile_pic: user.profile_pic 
+                        }}
+                    />
+                </Paper>
+
+                <Paper elevation={3} sx={{ p: 4 }}>
+                    <ServiceReviews serviceId={id!} />
+                </Paper>
+            </Container>
+        </Box>
     )
 };

@@ -38,7 +38,7 @@ const createService  = (newService: Omit<ServiceData, "id">) => {
 }
 
 const create = async (serviceData: any) => {
-  const response = await axios.post(baseUrl, serviceData);
+  const response = await axiosSecure.post(baseUrl, serviceData);
   return response.data;
 };
 

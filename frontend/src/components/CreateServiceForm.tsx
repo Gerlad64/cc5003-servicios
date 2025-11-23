@@ -1,5 +1,19 @@
 import { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import {
+    Container,
+    Box,
+    Typography,
+    TextField,
+    Button,
+    Paper,
+    Grid,
+    FormControlLabel,
+    Checkbox,
+    Divider
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SaveIcon from '@mui/icons-material/Save';
 import serviceReq from '../requests/services';
 
 const CreateServiceForm = () => {
@@ -30,13 +44,15 @@ const CreateServiceForm = () => {
             setFormData(prev => ({ ...prev, [name]: checked }));
         } else if (name.startsWith("contact.")) {
             const contactField = name.split(".")[1];
-            setFormData({
-                ...formData,
+            setFormData(prev => ({
+                ...prev,
                 contact: {
-                    ...formData.contact, [contactField]: value }
-            });
+                    ...prev.contact, 
+                    [contactField]: value 
+                }
+            }));
         } else {
-            setFormData({ ...formData, [name]: value });
+            setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
     const handleSubmit = async(e: React.FormEvent) => {
@@ -60,161 +76,206 @@ const CreateServiceForm = () => {
     };
 
     return (
-        <div>
-            <h1>Crear Nuevo Servicio</h1>
-            <a href="/services">Volver a Servicios</a>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nombre del Servicio:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+        <Container maxWidth="md" sx={{ py: 4 }}>
+            <Button
+                component={Link}
+                to="/services"
+                startIcon={<ArrowBackIcon />}
+                sx={{ mb: 3 }}
+            >
+                Volver a Servicios
+            </Button>
 
-                <div>
-                    <label>Categoría:</label>
-                    <input
-                        type="text"
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        placeholder="Ej: Jardinería, Plomería, Educación"
-                    />
-                </div>
+            <Paper elevation={3} sx={{ p: 4 }}>
+                <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'primary.main', fontWeight: 600 }}>
+                    Crear Nuevo Servicio
+                </Typography>
 
-                <div>
-                    <label>Descripción:</label>
-                    <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Grid container spacing={3}>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                label="Nombre del Servicio"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
 
-                <div>
-                    <label>Ubicación:</label>
-                    <input
-                        type="text"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleChange}
-                    />
-                </div>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                label="Categoría"
+                                name="category"
+                                value={formData.category}
+                                onChange={handleChange}
+                                placeholder="Ej: Jardinería, Plomería, Educación"
+                            />
+                        </Grid>
 
-                <div>
-                    <label>Horario:</label>
-                    <input
-                        type="text"
-                        name="schedule"
-                        value={formData.schedule}
-                        onChange={handleChange}
-                        placeholder="Ej: Lunes a Viernes 9:00-18:00"
-                    />
-                </div>
+                        <Grid size={{ xs: 12 }}>
+                            <TextField
+                                fullWidth
+                                multiline
+                                rows={4}
+                                label="Descripción"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
 
-                <div>
-                    <label>Precios:</label>
-                    <input
-                        type="text"
-                        name="pricing"
-                        value={formData.pricing}
-                        onChange={handleChange}
-                        placeholder="Ej: $20.000 por hora"
-                        required
-                    />
-                </div>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                label="Ubicación"
+                                name="location"
+                                value={formData.location}
+                                onChange={handleChange}
+                            />
+                        </Grid>
 
-                <div>
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="is_delivery"
-                            checked={formData.is_delivery}
-                            onChange={handleChange}
-                        />
-                        ¿Ofrece servicio a domicilio?
-                    </label>
-                </div>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                label="Horario"
+                                name="schedule"
+                                value={formData.schedule}
+                                onChange={handleChange}
+                                placeholder="Ej: Lunes a Viernes 9:00-18:00"
+                            />
+                        </Grid>
 
-                {formData.is_delivery && (
-                    <div>
-                        <label>Alcance del delivery (separados por comas):</label>
-                        <input
-                            type="text"
-                            name="delivery_scope"
-                            value={formData.delivery_scope}
-                            onChange={handleChange}
-                            placeholder="Ej: Santiago Centro, Las Condes"
-                        />
-                    </div>
-                )}
+                        <Grid size={{ xs: 12 }}>
+                            <TextField
+                                fullWidth
+                                label="Precios"
+                                name="pricing"
+                                value={formData.pricing}
+                                onChange={handleChange}
+                                placeholder="Ej: $20.000 por hora"
+                                required
+                            />
+                        </Grid>
 
-                <div>
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="on_location"
-                            checked={formData.on_location}
-                            onChange={handleChange}
-                        />
-                        ¿Servicio presencial en ubicación fija?
-                    </label>
-                </div>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        name="is_delivery"
+                                        checked={formData.is_delivery}
+                                        onChange={handleChange}
+                                    />
+                                }
+                                label="¿Ofrece servicio a domicilio?"
+                            />
+                        </Grid>
 
-                <h3>Información de Contacto:</h3>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        name="on_location"
+                                        checked={formData.on_location}
+                                        onChange={handleChange}
+                                    />
+                                }
+                                label="¿Servicio presencial en ubicación fija?"
+                            />
+                        </Grid>
 
-                <div>
-                    <label>WhatsApp:</label>
-                    <input
-                        type="text"
-                        name="contact.whatsapp"
-                        value={formData.contact.whatsapp}
-                        onChange={handleChange}
-                        placeholder="+569XXXXXXXX"
-                    />
-                </div>
+                        {formData.is_delivery && (
+                            <Grid size={{ xs: 12 }}>
+                                <TextField
+                                    fullWidth
+                                    label="Alcance del delivery (separados por comas)"
+                                    name="delivery_scope"
+                                    value={formData.delivery_scope}
+                                    onChange={handleChange}
+                                    placeholder="Ej: Santiago Centro, Las Condes"
+                                />
+                            </Grid>
+                        )}
 
-                <div>
-                    <label>Instagram:</label>
-                    <input
-                        type="text"
-                        name="contact.instagram"
-                        value={formData.contact.instagram}
-                        onChange={handleChange}
-                        placeholder="@tuusuario"
-                    />
-                </div>
+                        <Grid size={{ xs: 12 }}>
+                            <Divider sx={{ my: 2 }} />
+                            <Typography variant="h6" gutterBottom sx={{ color: 'primary.main' }}>
+                                Información de Contacto
+                            </Typography>
+                        </Grid>
 
-                <div>
-                    <label>Telegram:</label>
-                    <input
-                        type="text"
-                        name="contact.telegram"
-                        value={formData.contact.telegram}
-                        onChange={handleChange}
-                        placeholder="@tuusuario"
-                    />
-                </div>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                label="WhatsApp"
+                                name="contact.whatsapp"
+                                value={formData.contact.whatsapp}
+                                onChange={handleChange}
+                                placeholder="+569XXXXXXXX"
+                            />
+                        </Grid>
 
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        name="contact.mail"
-                        value={formData.contact.mail}
-                        onChange={handleChange}
-                        placeholder="ejemplo@correo.com"
-                    />
-                </div>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                label="Instagram"
+                                name="contact.instagram"
+                                value={formData.contact.instagram}
+                                onChange={handleChange}
+                                placeholder="@tuusuario"
+                            />
+                        </Grid>
 
-                <button type="submit">Crear Servicio</button>
-            </form>
-        </div>
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                label="Telegram"
+                                name="contact.telegram"
+                                value={formData.contact.telegram}
+                                onChange={handleChange}
+                                placeholder="@tuusuario"
+                            />
+                        </Grid>
+
+                        <Grid size={{ xs: 12, sm: 6 }}>
+                            <TextField
+                                fullWidth
+                                type="email"
+                                label="Email"
+                                name="contact.mail"
+                                value={formData.contact.mail}
+                                onChange={handleChange}
+                                placeholder="ejemplo@correo.com"
+                            />
+                        </Grid>
+
+                        <Grid size={{ xs: 12 }}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                fullWidth
+                                startIcon={<SaveIcon />}
+                                sx={{
+                                    mt: 2,
+                                    py: 1.5,
+                                    fontSize: '1.1rem',
+                                    bgcolor: 'secondary.main',
+                                    '&:hover': {
+                                        bgcolor: 'secondary.dark'
+                                    }
+                                }}
+                            >
+                                Crear Servicio
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Paper>
+        </Container>
     )
 };
 export default CreateServiceForm;

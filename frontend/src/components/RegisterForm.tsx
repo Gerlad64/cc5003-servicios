@@ -1,6 +1,18 @@
 import { useState } from "react";
 import userService from "../requests/users";
-import {useNavigate} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import {
+    Container,
+    Box,
+    Typography,
+    TextField,
+    Button,
+    Paper,
+    Alert,
+    Grid
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 
 const RegisterForm = () => {
@@ -45,30 +57,100 @@ const RegisterForm = () => {
   }
 
   return (
-    <div>
-      <h1> Registrarse </h1>
-      <a href="/"> « Volver al inicio</a>
-      <form onSubmit={handleSubmit}>
-        <div>
-          Nombre de usuario
-          <input value={username} onChange={handleUsernameChange}/>
-        </div>
-        <div>
-          Nombre 
-          <input value={firstname} onChange={handleFirstnameChange}/>
-        </div>
-        <div>
-          Apellido
-          <input value={lastname} onChange={handleLastnameChange}/>
-        </div>
-        <div>
-          Contraseña
-          <input value={password} onChange={handlePasswordChange}/>
-        </div>
-        <button type="submit"> Registrarse </button>
-      </form>
-        {errorMessage && <p>{errorMessage}</p>}
-    </div>
+    <Container maxWidth="sm" sx={{ py: 8 }}>
+      <Button
+        component={Link}
+        to="/"
+        startIcon={<ArrowBackIcon />}
+        sx={{ mb: 3 }}
+      >
+        Volver al inicio
+      </Button>
+
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'primary.main', fontWeight: 600, textAlign: 'center' }}>
+          Registrarse
+        </Typography>
+
+        {errorMessage && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {errorMessage}
+          </Alert>
+        )}
+
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <TextField
+            fullWidth
+            label="Nombre de usuario"
+            value={username}
+            onChange={handleUsernameChange}
+            margin="normal"
+            required
+          />
+
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                label="Nombre"
+                value={firstname}
+                onChange={handleFirstnameChange}
+                margin="normal"
+                required
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                label="Apellido"
+                value={lastname}
+                onChange={handleLastnameChange}
+                margin="normal"
+                required
+              />
+            </Grid>
+          </Grid>
+
+          <TextField
+            fullWidth
+            label="Contraseña"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            margin="normal"
+            required
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            fullWidth
+            startIcon={<PersonAddIcon />}
+            sx={{
+              mt: 3,
+              py: 1.5,
+              fontSize: '1.1rem',
+              bgcolor: 'secondary.main',
+              '&:hover': {
+                bgcolor: 'secondary.dark'
+              }
+            }}
+          >
+            Registrarse
+          </Button>
+
+          <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <Typography variant="body2">
+              ¿Ya tienes cuenta?{' '}
+              <Link to="/login" style={{ color: '#56A0D2', fontWeight: 500 }}>
+                Inicia sesión aquí
+              </Link>
+            </Typography>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

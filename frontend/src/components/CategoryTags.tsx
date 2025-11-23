@@ -30,16 +30,16 @@ export function CategoryTags({ services, selectedCategory, onCategorySelect }: C
     }, [services]);
 
     const colors = [
-        '#FF6B9D', // Rosa
-        '#FFD93D', // Amarillo
-        '#6BCB77', // Verde
-        '#4D96FF', // Azul
-        '#FF8B6B', // Naranja coral
-        '#C77DFF', // Púrpura
-        '#72DDF7', // Celeste
-        '#FFA8B6', // Rosa claro
-        '#95E1D3', // Verde menta
-        '#FFB84D', // Naranja dorado
+        '#062A79', // Catalina Blue
+        '#56A0D2', // Carolina Blue
+        '#89CFF0', // Baby Blue
+        '#5B0A92', // Metallic Violet
+        '#3d5ca3', // Catalina Blue light
+        '#7eb8dc', // Carolina Blue light
+        '#a3daf3', // Baby Blue light
+        '#7a3ba8', // Metallic Violet light
+        '#041d54', // Catalina Blue dark
+        '#3d7093', // Carolina Blue dark
     ];
 
     const getColorForCategory = (index: number) => {

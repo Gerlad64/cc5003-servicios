@@ -7,6 +7,27 @@ import { Link } from "react-router-dom";
 import { SearchFilters } from "./SearchFilters";
 import type { FilterState } from "./SearchFilters";
 import { CategoryTags } from "./CategoryTags";
+import {
+    Box,
+    Container,
+    Typography,
+    Card,
+    CardContent,
+    CardActionArea,
+    Chip,
+    Grid,
+    CircularProgress,
+    Alert,
+    Paper,
+    Divider
+} from '@mui/material';
+import {
+    Person as PersonIcon,
+    LocationOn as LocationIcon,
+    Star as StarIcon,
+    AttachMoney as MoneyIcon,
+    Category as CategoryIcon
+} from '@mui/icons-material';
 
 type User = Pick<UserData, "id" | "name" | "profile_pic">;
 
@@ -90,113 +111,206 @@ export function Services() {
     const filteredServices = filterServices(services, filters);
 
     if (loading) {
-        return <div>Cargando servicios...</div>
-    };
+        return (
+            <Box 
+                sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    minHeight: '80vh' 
+                }}
+            >
+                <CircularProgress size={60} />
+            </Box>
+        );
+    }
 
     if (error) {
-        return <div>Error: {error}</div>
-    };
+        return (
+            <Container maxWidth="lg" sx={{ py: 8 }}>
+                <Alert severity="error">{error}</Alert>
+            </Container>
+        );
+    }
 
     return (
-        <div>
-            {/* Header con navegación */}
-            <div style={{ padding: '20px', borderBottom: '1px solid #ddd' }}>
-                <h1>Lista de Servicios</h1>
-                <Link to="/" style={{ textDecoration: 'none', color: '#007bff' }}>
-                    « Volver al inicio
-                </Link>
-            </div>
+        <Box sx={{ bgcolor: '#f5f5f5', minHeight: '100vh', pt: 2, pb: 4 }}>
+            <Container maxWidth="xl">
+                {/* Header */}
+                <Box sx={{ mb: 4 }}>
+                    <Typography 
+                        variant="h3" 
+                        component="h1" 
+                        gutterBottom 
+                        sx={{ 
+                            fontWeight: 700,
+                            color: 'primary.main',
+                            textAlign: 'center'
+                        }}
+                    >
+                        Lista de Servicios
+                    </Typography>
+                    <Typography 
+                        variant="body1" 
+                        sx={{ textAlign: 'center', mb: 2 }}
+                    >
+                        <Link 
+                            to="/" 
+                            style={{ 
+                                textDecoration: 'none', 
+                                color: '#56A0D2',
+                                fontWeight: 500
+                            }}
+                        >
+                            « Volver al inicio
+                        </Link>
+                    </Typography>
+                </Box>
 
-            {/* Layout principal con sidebar */}
-            <div style={{ display: 'flex', minHeight: 'calc(100vh - 100px)' }}>
-                {/* Sidebar de filtros (izquierda) */}
-                <aside style={{
-                    width: '280px',
-                    borderRight: '1px solid #ddd',
-                    padding: '20px',
-                    backgroundColor: '#f8f9fa',
-                    overflowY: 'auto'
-                }}>
-                    <SearchFilters onFiltersChange={handleFiltersChange} />
-                </aside>
+                {/* Category Tags */}
+                <Box sx={{ mb: 3 }}>
+                    <CategoryTags 
+                        services={services}
+                        selectedCategory={selectedCategory}
+                        onCategorySelect={setSelectedCategory}
+                    />
+                </Box>
 
-                {/* Contenido principal (derecha) */}
-                <main style={{
-                    flex: 1,
-                    padding: '20px',
-                    overflowY: 'auto'
-                }}>
-                    {/* Contador de resultados */}
-                    <p style={{ 
-                        marginBottom: '20px',
-                        fontSize: '16px',
-                        color: '#666'
-                    }}>
-                        Mostrando <strong>{filteredServices.length}</strong> servicios disponibles
-                    </p>
+                <Grid container spacing={3}>
+                    {/* Sidebar de filtros */}
+                    <Grid size={{ xs: 12, md: 3 }}>
+                        <Paper 
+                            elevation={2}
+                            sx={{ 
+                                p: 3,
+                                position: 'sticky',
+                                top: 80,
+                                maxHeight: 'calc(100vh - 100px)',
+                                overflowY: 'auto'
+                            }}
+                        >
+                            <Typography 
+                                variant="h6" 
+                                gutterBottom 
+                                sx={{ 
+                                    fontWeight: 600,
+                                    color: 'primary.main',
+                                    mb: 2
+                                }}
+                            >
+                                Filtrar servicios
+                            </Typography>
+                            <Divider sx={{ mb: 2 }} />
+                            <SearchFilters onFiltersChange={handleFiltersChange} />
+                        </Paper>
+                    </Grid>
 
                     {/* Lista de servicios */}
-                    <div>
+                    <Grid size={{ xs: 12, md: 9 }}>
+                        <Typography 
+                            variant="body1" 
+                            sx={{ mb: 3, color: 'text.secondary' }}
+                        >
+                            Mostrando <strong>{filteredServices.length}</strong> servicios disponibles
+                        </Typography>
+
                         {filteredServices.length === 0 ? (
-                            <p>No se encontraron servicios con los filtros aplicados</p>
+                            <Paper elevation={1} sx={{ p: 4, textAlign: 'center' }}>
+                                <Typography variant="h6" color="text.secondary">
+                                    No se encontraron servicios con los filtros aplicados
+                                </Typography>
+                            </Paper>
                         ) : (
-                            filteredServices.map((service) => {
-                                const user = users.find((u) => String(u.id) === String(service.user_id));
-                                
-                                return (
-                                    <div 
-                                        key={service.id}
-                                        style={{
-                                            border: '1px solid #ddd',
-                                            borderRadius: '8px',
-                                            padding: '15px',
-                                            marginBottom: '15px',
-                                            backgroundColor: '#fff',
-                                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                                        }}
-                                    >
-                                        <h3 style={{ marginTop: 0 }}>
-                                            <Link 
-                                                to={`/services/${service.id}`}
-                                                style={{ 
-                                                    textDecoration: 'none',
-                                                    color: '#007bff'
+                            <Grid container spacing={2}>
+                                {filteredServices.map((service) => {
+                                    const user = users.find((u) => String(u.id) === String(service.user_id));
+                                    
+                                    return (
+                                        <Grid size={{ xs: 12 }} key={service.id}>
+                                            <Card 
+                                                elevation={2}
+                                                sx={{
+                                                    transition: 'all 0.3s',
+                                                    '&:hover': {
+                                                        transform: 'translateY(-4px)',
+                                                        boxShadow: 6
+                                                    }
                                                 }}
                                             >
-                                                {service.name}
-                                            </Link>
-                                        </h3>
-                                        <p style={{ margin: '5px 0', color: '#666' }}>
-                                            👤 Por: {user ? user.name : 'Usuario desconocido'}
-                                        </p>
-                                        <p style={{ margin: '5px 0', color: '#666' }}>
-                                            📍 Ubicación: {service.location}
-                                        </p>
-                                        {service.category && (
-                                            <p style={{ margin: '5px 0', color: '#666' }}>
-                                                🏷️ Categoría: {service.category}
-                                            </p>
-                                        )}
-                                        <p style={{ margin: '5px 0', color: '#666' }}>
-                                            ⭐ Calificación: {service.rating}/5
-                                        </p>
-                                        <p style={{ margin: '5px 0', color: '#666', fontWeight: 'bold' }}>
-                                            💰 Precio: {service.pricing}
-                                        </p>
-                                    </div>
-                                )
-                            })
-                        )}
-                    </div>
-                </main>
-            </div>
+                                                <CardActionArea 
+                                                    component={Link} 
+                                                    to={`/services/${service.id}`}
+                                                >
+                                                    <CardContent>
+                                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                                                            <Typography 
+                                                                variant="h5" 
+                                                                component="h2"
+                                                                sx={{ 
+                                                                    fontWeight: 600,
+                                                                    color: 'primary.main',
+                                                                    flex: 1
+                                                                }}
+                                                            >
+                                                                {service.name}
+                                                            </Typography>
+                                                            <Chip 
+                                                                icon={<StarIcon />}
+                                                                label={`${service.rating}/5`}
+                                                                color="warning"
+                                                                size="small"
+                                                                sx={{ ml: 2 }}
+                                                            />
+                                                        </Box>
 
-            {/* Barra de categorías en la parte inferior */}
-            <CategoryTags 
-                services={services}
-                selectedCategory={selectedCategory}
-                onCategorySelect={setSelectedCategory}
-            />
-        </div>
+                                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary' }}>
+                                                                <PersonIcon sx={{ mr: 0.5, fontSize: 20 }} />
+                                                                <Typography variant="body2">
+                                                                    Por: {user ? user.name : 'Usuario desconocido'}
+                                                                </Typography>
+                                                            </Box>
+
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary' }}>
+                                                                <LocationIcon sx={{ mr: 0.5, fontSize: 20 }} />
+                                                                <Typography variant="body2">
+                                                                    {service.location}
+                                                                </Typography>
+                                                            </Box>
+
+                                                            {service.category && (
+                                                                <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary' }}>
+                                                                    <CategoryIcon sx={{ mr: 0.5, fontSize: 20 }} />
+                                                                    <Typography variant="body2">
+                                                                        {service.category}
+                                                                    </Typography>
+                                                                </Box>
+                                                            )}
+                                                        </Box>
+
+                                                        <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                                                            <MoneyIcon sx={{ mr: 0.5, color: 'success.main' }} />
+                                                            <Typography 
+                                                                variant="h6" 
+                                                                sx={{ 
+                                                                    fontWeight: 600,
+                                                                    color: 'success.main'
+                                                                }}
+                                                            >
+                                                                {service.pricing}
+                                                            </Typography>
+                                                        </Box>
+                                                    </CardContent>
+                                                </CardActionArea>
+                                            </Card>
+                                        </Grid>
+                                    );
+                                })}
+                            </Grid>
+                        )}
+                    </Grid>
+                </Grid>
+            </Container>
+        </Box>
     )
 };

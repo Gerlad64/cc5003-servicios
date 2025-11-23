@@ -1,4 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Box } from '@mui/material';
 import './App.css';
 import { HomePage } from './components/HomePage';
 import { Services } from './components/Services';
@@ -7,11 +10,14 @@ import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 import CreateServiceForm from './components/CreateServiceForm';
 import UserPage from './components/UserPage';
+import { TopBar } from './components/TopBar';
 import {useEffect, useState} from "react";
 import loginService from "./requests/login"
+import theme from './theme';
 
-function App() {
+function AppContent() {
    const [username, setUser] = useState<string | null>(null);
+   const navigate = useNavigate();
 
     useEffect(() => {
         const checkLogin = async () => {
@@ -20,12 +26,23 @@ function App() {
         }
         checkLogin()
     }, [])
+
+    const handleLogout = async () => {
+        try {
+            await loginService.logout();
+            setUser(null);
+            navigate('/');
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
+    };
+
   return (
-    <Router>
-      <div className="App">
-          {username ? <h2>esta es una topbar. Usuario: {username}</h2> : <h2>esta es una topbar: usuario no loggeado</h2>}
+    <>
+      <TopBar username={username} onLogout={handleLogout} />
+      <Box component="main" sx={{ pt: 8 }}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage username={username} />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services/:id" element={<SingleServicePage />} />
           <Route path="/register" element={<RegisterForm />} />
@@ -33,8 +50,19 @@ function App() {
           <Route path="/services/create" element={<CreateServiceForm />} />
           <Route path="/me" element={<UserPage />} />
         </Routes>
-      </div>
-    </Router>
+      </Box>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <AppContent />
+      </Router>
+    </ThemeProvider>
   )
 };
 
