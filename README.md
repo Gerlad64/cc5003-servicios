@@ -67,3 +67,14 @@ En este hito, se incorporan los siguientes endpoints principales
 - MONGODB_DBNAME= serviciosCLdb
 - TEST_MONGODB_DBNAME= test_serviciosCLdb
 - JWT_SECRET=miclavesecreta
+
+#### Tests End-to-End (E2E)
+
+Para ejecutar los tests E2E:
+
+    > cd e2e-tests
+    > npm run test
+
+Para ejecutar los tests E2E con una interfaz gráfica:
+
+    > npm run test:ui
