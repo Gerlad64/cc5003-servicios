@@ -63,7 +63,6 @@ export function Services() {
                 return userReq.getAll(); // Cambiamos a getAll para obtener todos los usuarios
             })
             .then((data_u: UserData[]) => {
-                console.log(data_u);
                 setUsers(data_u.map((u) => ({ 
                     id: u.id,
                     name: u.name + " " + u.last_name, 
@@ -229,8 +228,6 @@ export function Services() {
                             <Grid container spacing={2}>
                                 {filteredServices.map((service) => {
                                     const user = users.find((u) => String(u.id) === String(service.user_id));
-                                    console.log(users);
-                                    console.log(service.user_id);
                                     return (
                                         <Grid size={{ xs: 12 }} key={service.id}>
                                             <Card 

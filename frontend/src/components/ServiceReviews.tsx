@@ -25,6 +25,8 @@ import {
   Send as SendIcon
 } from '@mui/icons-material';
 
+import { useReviewsStore } from "../reviewStore";
+
 interface ServiceReviewsProps {
   serviceId: string;
 }
@@ -40,6 +42,8 @@ export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
     comment: "",
   });
 
+  const reviewStore = useReviewsStore();
+
   useEffect(() => {
     loadReviews();
   }, [serviceId]);
@@ -48,6 +52,8 @@ export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
     try {
       const data = await reviewService.getByServiceId(serviceId);
       setReviews(data);
+      reviewStore.setReviews(data);
+      console.log(useReviewsStore.getState().reviews);
       setLoading(false);
     } catch (error) {
       console.error("Error loading reviews:", error);
@@ -94,7 +100,7 @@ export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h2" sx={{ fontWeight: 600, color: 'primary.main' }}>
-          Reviews ({reviews.length})
+          Reviews ({reviewStore.reviews.length})
         </Typography>
         
         <Button
@@ -187,7 +193,7 @@ export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
       <Divider sx={{ my: 3 }} />
 
       <Box>
-        {reviews.length === 0 ? (
+        {reviewStore.reviews.length === 0 ? (
           <Card elevation={1} sx={{ p: 4, textAlign: 'center', bgcolor: '#fafafa' }}>
             <Typography variant="h6" color="text.secondary">
               No hay reviews todavía
@@ -198,7 +204,7 @@ export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
           </Card>
         ) : (
           <Stack spacing={2}>
-            {reviews.map((review) => (
+            {reviewStore.reviews.map((review) => (
               <Card key={review.id} elevation={2}>
                 <CardContent>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>

@@ -28,7 +28,7 @@ const Header = (props : HeaderProps) => {
                 <div>
                     {'★'.repeat(props.rating)}{'☆'.repeat(5 - props.rating)}
                     <span>
-                        ({props.rating}/5)
+                        ({props.rating.toPrecision(2)}/5)
                     </span>
                 </div>
             </div>
