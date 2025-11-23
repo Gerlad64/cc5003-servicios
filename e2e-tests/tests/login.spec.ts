@@ -18,9 +18,9 @@ test.describe("Login tests", () => {
   test("Successful login", async ({ page }) => {
     await page.goto("/login");
 
-    await page.getByLabel("username").fill("esteban.lopez");
-    await page.getByLabel("password").fill("password");
-    await page.getByRole("button").click();
-    await expect(page.getByText("Esteban")).toBeVisible();
+    await page.getByLabel("Nombre de usuario").fill("esteban.lopez");
+    await page.getByLabel("Contraseña").fill("password");
+    await page.getByRole("button", { name : "Iniciar Sesión" }).last().click();
+    await expect(page.getByText("esteban.lopez")).toBeVisible();
   });
 });
