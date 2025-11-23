@@ -63,7 +63,7 @@ test.describe("Service tests", () => {
     page.on('dialog', async dialog => {
       expect(dialog.type()).toBe('alert');
       expect(dialog.message()).toContain('Error al crear el servicio');
-      await dialog.dismiss(); // Accept the alert
+      await dialog.dismiss();
     });
     
     await page.evaluate(() => {

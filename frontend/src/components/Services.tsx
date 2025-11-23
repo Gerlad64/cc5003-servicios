@@ -29,6 +29,8 @@ import {
     Category as CategoryIcon
 } from '@mui/icons-material';
 
+import { useServicesStore } from '../serviceStore';
+
 type User = Pick<UserData, "id" | "name" | "profile_pic">;
 
 /**
@@ -36,7 +38,7 @@ type User = Pick<UserData, "id" | "name" | "profile_pic">;
  * @returns Vista de listado de servicios con enlaces para ver detalles
  */
 export function Services() {
-    const [services, setServices] = useState<ServiceData[]>([]);
+    // const [services, setServices] = useState<ServiceData[]>([]);
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -49,12 +51,14 @@ export function Services() {
         rating: '',
         deliveryOption: ''
     });
+    const serviceStore = useServicesStore();
 
     // trae todos los servicios y usuarios
     useEffect(() => {
         serviceReq.getAll()
             .then((data_s) => {
-                setServices(data_s); // setea todos los servicios del servidor
+                // setServices(data_s); // setea todos los servicios del servidor
+                serviceStore.setServices(data_s);
                 // setea los usuarios buscando por id
                 return userReq.getAll(); // Cambiamos a getAll para obtener todos los usuarios
             })
@@ -108,7 +112,7 @@ export function Services() {
         });
     };
 
-    const filteredServices = filterServices(services, filters);
+    const filteredServices = filterServices(serviceStore.services, filters);
 
     if (loading) {
         return (
@@ -170,7 +174,7 @@ export function Services() {
                 {/* Category Tags */}
                 <Box sx={{ mb: 3 }}>
                     <CategoryTags 
-                        services={services}
+                        services={serviceStore.services}
                         selectedCategory={selectedCategory}
                         onCategorySelect={setSelectedCategory}
                     />

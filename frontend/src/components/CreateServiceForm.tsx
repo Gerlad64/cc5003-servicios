@@ -15,6 +15,8 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import serviceReq from '../requests/services';
+import { useServicesStore } from '../serviceStore';
+import type { ServiceData } from '../model/ServiceData';
 
 const CreateServiceForm = () => {
     const navigate = useNavigate();
@@ -35,6 +37,8 @@ const CreateServiceForm = () => {
             mail: ""
         }
     });
+
+    const serviceStore = useServicesStore();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -65,8 +69,9 @@ const CreateServiceForm = () => {
                 ? formData.delivery_scope.split(",").map(s => s.trim()) 
                 : [],
             };
-
-            await serviceReq.create(serviceData);
+            
+            const service: ServiceData = await serviceReq.create(serviceData);
+            serviceStore.addService(service);
             alert("Servicio creado exitosamente");
             navigate("/services");
         } catch (error) {
