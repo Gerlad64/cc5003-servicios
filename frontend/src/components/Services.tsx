@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SearchFilters } from "./SearchFilters";
 import type { FilterState } from "./SearchFilters";
+import { CategoryTags } from "./CategoryTags";
 
 type User = Pick<UserData, "id" | "name" | "profile_pic">;
 
@@ -18,6 +19,7 @@ export function Services() {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [filters, setFilters] = useState<FilterState>({
         searchText: '',
         location: '',
@@ -59,6 +61,11 @@ export function Services() {
     // Función para filtrar servicios
     const filterServices = (services: ServiceData[], filters: FilterState): ServiceData[] => {
         return services.filter((service) => {
+            // Filtro por categoría
+            if (selectedCategory && service.category !== selectedCategory) {
+                return false;
+            }
+
             // Filtro por texto de búsqueda
             if (filters.searchText && !service.name.toLowerCase().includes(filters.searchText.toLowerCase())) {
                 return false;
@@ -165,6 +172,11 @@ export function Services() {
                                         <p style={{ margin: '5px 0', color: '#666' }}>
                                             📍 Ubicación: {service.location}
                                         </p>
+                                        {service.category && (
+                                            <p style={{ margin: '5px 0', color: '#666' }}>
+                                                🏷️ Categoría: {service.category}
+                                            </p>
+                                        )}
                                         <p style={{ margin: '5px 0', color: '#666' }}>
                                             ⭐ Calificación: {service.rating}/5
                                         </p>
@@ -178,6 +190,13 @@ export function Services() {
                     </div>
                 </main>
             </div>
+
+            {/* Barra de categorías en la parte inferior */}
+            <CategoryTags 
+                services={services}
+                selectedCategory={selectedCategory}
+                onCategorySelect={setSelectedCategory}
+            />
         </div>
     )
 };

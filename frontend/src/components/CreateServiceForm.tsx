@@ -6,6 +6,7 @@ const CreateServiceForm = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
+        category: "",
         description: "",
         location: "",
         schedule: "",
@@ -71,6 +72,17 @@ const CreateServiceForm = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
+                    />
+                </div>
+
+                <div>
+                    <label>Categoría:</label>
+                    <input
+                        type="text"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        placeholder="Ej: Jardinería, Plomería, Educación"
                     />
                 </div>
 

@@ -23,6 +23,8 @@ interface ServiceData {
     user_id: mongoose.Types.ObjectId;
     /** nombre del servicio que se está prestando */
     name: string;
+    /** categoría del servicio */
+    category: string;
     /** Calificación del servicio */
     rating: number;
     /** true si el servicio se ofrece a domicilio, false si no. */
@@ -59,6 +61,10 @@ const serviceSchema = new mongoose.Schema<ServiceData>({
     name: {
         type: String,
         required: true,
+    },
+    category: {
+        type: String,
+        required: false,
     },
     rating: {
         type: Number,

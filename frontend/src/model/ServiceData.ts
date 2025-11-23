@@ -20,6 +20,8 @@ export interface ServiceData {
     user_id: string;
     /** nombre del servicio que se está prestando */
     name: string;
+    /** categoría del servicio */
+    category?: string;
     /** Calificación del servicio */
     rating: number;
     /** true si el servicio se ofrece a domicilio, false si no. */
