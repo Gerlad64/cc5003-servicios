@@ -68,7 +68,15 @@ En este hito, se incorporan los siguientes endpoints principales
 - TEST_MONGODB_DBNAME= test_serviciosCLdb
 - JWT_SECRET=miclavesecreta
 
+## README Hito 3
+
+#### Estado Global
+
+Se utilizo la libreria Zustand para implementar stores de servicios y reseñas.
+
 #### Tests End-to-End (E2E)
+
+Se implementaron tests con la libreria playwright para los flujos de inicio de sesion exitoso y fallido, cierre de sesion y de creacion exitosa y fallida de un servicio.
 
 Para ejecutar los tests E2E:
 

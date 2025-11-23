@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import reviewService from "../requests/reviews";
-import type { ReviewData } from "../model/ReviewData";
 import {
   Box,
   Typography,
@@ -32,7 +31,7 @@ interface ServiceReviewsProps {
 }
 
 export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
-  const [reviews, setReviews] = useState<ReviewData[]>([]);
+  // const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +50,7 @@ export function ServiceReviews({ serviceId }: ServiceReviewsProps) {
   const loadReviews = async () => {
     try {
       const data = await reviewService.getByServiceId(serviceId);
-      setReviews(data);
+      // setReviews(data);
       reviewStore.setReviews(data);
       console.log(useReviewsStore.getState().reviews);
       setLoading(false);
