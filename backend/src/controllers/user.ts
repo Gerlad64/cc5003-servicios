@@ -64,5 +64,33 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { createOne, getAll, getById };
+const updateProfilePic = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // Verificar si multer procesó el archivo
+        if (!req.file) {
+            return res.status(400).json({ message: 'No se subió ningún archivo' });
+        }
+        const userId = req.params.id;
+        // ruta para guardar archivo
+        const filePath = `/profile_pics/${req.file.filename}`;
+
+        // actualizar
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { profile_pic: filePath },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        return res.json(updatedUser);
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Error al subir imagen', error });
+    }
+}
+
+export default { createOne, getAll, getById, updateInfo, updateProfilePic };
 

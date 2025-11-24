@@ -35,7 +35,7 @@ else {
 
 app.use(express.json());
 app.use(cookieParser());
-
+app.use('/profile_pics', express.static(path.join(__dirname, '../profile_pics')));
 // CORS configuration
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' 

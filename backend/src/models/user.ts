@@ -23,8 +23,10 @@ interface UserData {
     last_name: string;
     /** id's de los servicios que ofrece */
     services: mongoose.Types.ObjectId[];
-    /** url a foto de perfil */
+    /** ruta a la foto de perfil en el backend. Ejemplo: /profile_pics/foto.jpg */
     profile_pic?: string;
+    /** url a la foto de perfil. Ejemplo: http://HOST:PORT*/
+    profile_pic_url?: string;
     /** la "biografía" del usuario */
     biography?: string;
     /** la calificación total por todos sus servicios */
@@ -70,7 +72,22 @@ const userSchema = new Schema<UserData>({
         min: 0.0,
         max: 5.0
     },
-}, { timestamps: true });
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true},
+    timestamps: true
+});
+
+/** Permite retornar la url a la foto de perfil, independientemente de
+ * la url que esté hosteando el backend, ya sea localhost o fullstack.dcc.uchile.cl*/
+userSchema.virtual("profile_pic_url").get(function () {
+    if (!this.profile_pic) {
+        return null;
+    }
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
+
+    return `${baseUrl}${this.profile_pic}`;
+})
 
 const User = mongoose.model<UserData>("User", userSchema);
 
