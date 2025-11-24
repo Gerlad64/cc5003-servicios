@@ -15,6 +15,7 @@ export interface UserData {
     services: string[];
     /** url a foto de perfil */
     profile_pic?: string;
+    profile_pic_url?: string;
     /** la "biografía" del usuario */
     biography?: string;
     /** la calificación total por todos sus servicios */
