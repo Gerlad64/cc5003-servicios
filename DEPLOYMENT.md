@@ -46,6 +46,7 @@ Verifica que tenga:
 ```
 PORT=7104
 HOST=0.0.0.0
+BASE_URL=http://fullstack.dcc.uchile.cl
 NODE_ENV=production
 MONGODB_URI=mongodb://localhost:27017/serviciosCLdb
 MONGODB_DBNAME=serviciosCLdb
