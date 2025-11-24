@@ -40,7 +40,10 @@ En este hito, se incorporan los siguientes endpoints principales
 ##### */api/users*
 
 - get('/'): Trae todos los usuarios en formato json de la base de datos
+- get('/:id') Trae el usuario el usuario con el id entregado como parámetro
 - post('/'): Crea un nuevo usuario
+- put('/:id'): Edita la información del usuario identicado por el id entregado.
+- put('/:id/profile'): Permite cambiar la foto de perfil del usuario identificado por el id entregado.
 
 ##### */api/services*
 
@@ -56,7 +59,7 @@ En este hito, se incorporan los siguientes endpoints principales
 ##### */api/reviews*
 
 - get('/'): Trae todas las reseñas creadas de todos los servicios
-- get('/:id'): Trae las reseñas asociadas al servicio con id entregado como parámetro.
+- get('/service/:id'): Trae las reseñas asociadas al servicio con id entregado como parámetro.
 - post('/:id'): Crea una nueva reseña al servicio con id entregado como parámetro.
 #### Variables de entorno
 
