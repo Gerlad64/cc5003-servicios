@@ -84,9 +84,10 @@ const updateProfilePic = async (req: Request, res: Response, next: NextFunction)
         if (!updatedUser) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
-
-        return res.json(updatedUser);
-
+        return res.json({
+            message: 'Foto actualizada',
+            url: updatedUser.profile_pic_url
+        });
     } catch (error) {
         return res.status(500).json({ message: 'Error al subir imagen', error });
     }
