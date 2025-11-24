@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=production node out/index.js",
     "start:prod": "node out/index.js",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
-    "test": "cross-env NODE_ENV=test; for t in $(ls tests/**/*.test.ts); do tsx --test \"$t\"; done",
+    "test": "cross-env NODE_ENV=test tsx --test --test-concurrency=1 \"tests/**/*.test.ts\"",
     "server": "json-server --port 3001 db.json"
   },
   "author": "",
