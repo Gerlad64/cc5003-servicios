@@ -46,7 +46,7 @@ export const me = async (req: Request, res: Response) => {
     // const body = req.body;
     const user = await User.findById(req.userId);
     const userObject = user ? user.toObject() : null;
-    const { password, _id, __v, ...userData } = userObject ?? {};
+    const { password, __v, ...userData } = userObject ?? {};
     res.status(200).json(userData);
 };
 
