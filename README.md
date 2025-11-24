@@ -33,12 +33,19 @@ luego se modificaron los archivos package.json, y tsconfig.json según como est�
 Para correr el server de backend:
     cd backend ; npm run server
 
-Para correr el frontend:
-
+Para correr el frontend a modo de prueba:
      > cd frontend
      > npm install
      > npm run dev
+El backend se creó con los siguientes comandos: 
 
+    > mkdir backend 
+    > cd backend 
+    > npm init 
+    > npm install --save-dev typescript @types/node ts-node-dev 
+    > npx tsc --init 
+
+luego se modificaron los archivos package.json, y tsconfig.json según como están en la clase 06-Programming a Server
 
 ## Backend
 
