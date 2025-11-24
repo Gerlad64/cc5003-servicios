@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { UserData } from "../model/UserData";
+import axiosSecure from "../utils/axiosSecure.ts";
 
 const baseUrl = "/api/users";
 
@@ -32,9 +33,20 @@ const createUser = (newUser : {username: string, password: string, name: string,
     return axios.post(baseUrl, newUser).then((request) => request.data);
 };
 
+const uploadProfilePic = async (profile_pic: File) => {
+    const formData = new FormData();
+    formData.append("profile", profile_pic);
+    console.log("HERE BEFORE ME")
+    const me = (await axiosSecure.get("/api/login/me")).data;
+    console.log("HERE IS ME");
+    console.log(me);
+    return axios.put(`${baseUrl}/${me?._id}/profile`, formData).then((request) => request.data);
+}
+
 export default {
     getAll,
     getFiltered,
     getbyId,
     createUser,
+    uploadProfilePic,
 };
