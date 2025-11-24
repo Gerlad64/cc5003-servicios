@@ -64,6 +64,21 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+/** Actualiza la bio de un usuario */
+const updateInfo = async (req: Request, res: Response, next: NextFunction) => {
+   const userId = req.params.id;
+   const user = await User.findById(userId);
+   const bio = req.body.biography;
+   const updatedUser = await User.findByIdAndUpdate(
+       userId,
+       { biography: bio },
+       { new: true}
+   );
+   if (!updatedUser)
+       return res.status(404).json({ message: "User not found"});
+   return res.status(200).json(updatedUser);
+}
+
 const updateProfilePic = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // Verificar si multer procesó el archivo
