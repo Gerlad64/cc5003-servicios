@@ -31,7 +31,7 @@ import {
 
 import { useServicesStore } from '../serviceStore';
 
-type User = Pick<UserData, "id" | "name" | "profile_pic">;
+type User = Pick<UserData, "id" | "name" | "profile_pic_url">;
 
 /**
  * Componente que genera la vista de una lista de servicios
@@ -66,7 +66,7 @@ export function Services() {
                 setUsers(data_u.map((u) => ({ 
                     id: u.id,
                     name: u.name + " " + u.last_name, 
-                    profile_pic: u.profile_pic
+                    profile_pic_url: u.profile_pic_url
                 })));
                 setLoading(false);
             })

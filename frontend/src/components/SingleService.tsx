@@ -5,16 +5,16 @@ interface HeaderProps {
     username: string
     rating: number
     location: string
-    profile_pic?: string
+    profile_pic_url?: string
 };
 
 const Header = (props : HeaderProps) => {
     return (
         <div>
             <div>
-                {props.profile_pic ? (
+                {props.profile_pic_url ? (
                     <img 
-                        src={props.profile_pic} 
+                        src={props.profile_pic_url}
                         alt={`Perfil de ${props.username}`}
                         style={{
                             width: '100px',
@@ -151,7 +151,7 @@ const Contact = (props: ContactProps) => {
 
 interface Props {
     service: ServiceData
-    user?: {name: string, profile_pic?: string}
+    user?: {name: string, profile_pic_url?: string}
 };
 
 /**
@@ -160,7 +160,7 @@ interface Props {
  * nombre del usuario y su foto de perfil.
  * @param service el servicio que se quiere mostrar 
  * @param user nombre y foto de perfil del usuario
- * entregado como {user: string, profile_pic: string}
+ * entregado como {user: string, profile_pic_url: string}
  * @returns un div con los detalles del servicio
  */
 export function SingleService({service, user}: Props) {
@@ -173,7 +173,7 @@ export function SingleService({service, user}: Props) {
                 location={service.location || 'Ubicación no especificada'}
                 title={service.name}
                 username={user.name}
-                profile_pic={user.profile_pic}
+                profile_pic_url={user.profile_pic_url}
                 rating={service.rating}
             />
             

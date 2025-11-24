@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
-type User = Pick<UserData, "id" | "name" | "profile_pic">;
+type User = Pick<UserData, "id" | "name" | "profile_pic_url">;
 
 /**
  * Componente página que muestra un servicio individual
@@ -66,7 +66,7 @@ export function SingleServicePage() {
                     setUser({
                         id: foundUser.id,
                         name: `${foundUser.name} ${foundUser.last_name}`,
-                        profile_pic: foundUser.profile_pic
+                        profile_pic_url: foundUser.profile_pic_url
                     });
                 };
                 setLoading(false);
@@ -143,7 +143,7 @@ export function SingleServicePage() {
                         service={service} 
                         user={{ 
                             name: user.name, 
-                            profile_pic: user.profile_pic 
+                            profile_pic_url: user.profile_pic_url
                         }}
                     />
                 </Paper>
