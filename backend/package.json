@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
+    "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
     "start": "cross-env NODE_ENV=production node out/index.js",
     "start:prod": "node out/index.js",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
