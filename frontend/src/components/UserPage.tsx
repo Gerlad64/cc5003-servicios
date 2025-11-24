@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import loginService from "../requests/login";
+import userService from "../requests/users";
 import type { UserData } from "../model/UserData";
 import {
   Container,
@@ -24,6 +25,7 @@ import {
 const UserPage = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const init = async () => {
@@ -55,6 +57,23 @@ const UserPage = () => {
     );
   }
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+          const selectedFile = e.target.files[0];
+          setFile(selectedFile);
+      }
+  };
+  const handleUpload = async () => {
+      if (!file) return alert('Por favor selecciona una imagen');
+      try {
+          const response = await userService.uploadProfilePic(file);
+          console.log(response);
+      }
+      catch (error) {
+          console.error(error);
+      }
+  }
+
   return (
     <Box sx={{ bgcolor: '#f5f5f5', minHeight: '100vh', py: 4 }}>
       <Container maxWidth="md">
@@ -72,11 +91,12 @@ const UserPage = () => {
         ) : (
           <Box>
             {/* Header del perfil */}
+
             <Paper elevation={3} sx={{ p: 4, mb: 3 }}>
               <Grid container spacing={3} alignItems="center">
                 <Grid size={{ xs: 12, sm: 'auto' }}>
                   <Avatar
-                    src={user.profile_pic}
+                    src={user.profile_pic_url}
                     alt={`${user.name} ${user.last_name}`}
                     sx={{ 
                       width: 120, 
@@ -182,6 +202,16 @@ const UserPage = () => {
             </Grid>
           </Box>
         )}
+          <input
+              type="file"
+              accept="image/*" // Solo aceptar imágenes
+              onChange={handleFileChange}
+              className="my-2"
+          />
+
+          <button onClick={handleUpload} className="bg-blue-500 text-white px-4 py-2 rounded">
+              Subir Foto
+          </button>
       </Container>
     </Box>
   );
