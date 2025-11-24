@@ -14,18 +14,30 @@ import {
   CircularProgress,
   Divider,
   Card,
-  CardContent
+  CardContent,
+  Badge,
+  IconButton,
+  styled,
+  Button
 } from '@mui/material';
 import {
   Person as PersonIcon,
   WorkOutline as WorkIcon,
   Star as StarIcon
 } from '@mui/icons-material';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import SaveIcon from '@mui/icons-material/Save';
+
+const Input = styled('input')({
+    display: 'none',
+});
 
 const UserPage = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [file, setFile] = useState<File | null>(null);
+  // previsualización de la imagen
+  const [preview, setPreview] = useState(user?.profile_pic_url);
 
   useEffect(() => {
     const init = async () => {
@@ -61,6 +73,7 @@ const UserPage = () => {
       if (e.target.files && e.target.files[0]) {
           const selectedFile = e.target.files[0];
           setFile(selectedFile);
+          setPreview(URL.createObjectURL(selectedFile));
       }
   };
   const handleUpload = async () => {
@@ -95,8 +108,36 @@ const UserPage = () => {
             <Paper elevation={3} sx={{ p: 4, mb: 3 }}>
               <Grid container spacing={3} alignItems="center">
                 <Grid size={{ xs: 12, sm: 'auto' }}>
+                    <Badge
+                        overlap="circular"
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        badgeContent={
+                            <label htmlFor="icon-button-file">
+                                <Input
+                                    accept="image/*"
+                                    id="icon-button-file"
+                                    type="file"
+                                    onChange={handleFileChange} // Usamos la nueva función
+                                />
+                                <IconButton
+                                    color="primary"
+                                    aria-label="upload picture"
+                                    component="span"
+                                    sx={{
+                                        bgcolor: 'background.paper',
+                                        border: '2px solid',
+                                        borderColor: 'background.paper',
+                                        boxShadow: 2,
+                                        '&:hover': { bgcolor: 'grey.200' }
+                                    }}
+                                >
+                                    <PhotoCamera color="primary" />
+                                </IconButton>
+                            </label>
+                        }
+                    >
                   <Avatar
-                    src={user.profile_pic_url}
+                    src={preview || user.profile_pic_url}
                     alt={`${user.name} ${user.last_name}`}
                     sx={{ 
                       width: 120, 
@@ -106,8 +147,20 @@ const UserPage = () => {
                       boxShadow: 3
                     }}
                   />
+                </Badge>
                 </Grid>
-                
+                  {file && (
+                      <Button
+                          variant="contained"
+                          color="primary"
+                          startIcon={<SaveIcon />}
+                          onClick={handleUpload}
+                          sx={{ mt: 2, borderRadius: 20, textTransform: 'none' }}
+                          size="small"
+                      >
+                          Guardar Foto
+                      </Button>
+                  )}
                 <Grid size={{ xs: 12, sm: 8 }}>
                   <Typography 
                     variant="h3" 
@@ -202,16 +255,7 @@ const UserPage = () => {
             </Grid>
           </Box>
         )}
-          <input
-              type="file"
-              accept="image/*" // Solo aceptar imágenes
-              onChange={handleFileChange}
-              className="my-2"
-          />
 
-          <button onClick={handleUpload} className="bg-blue-500 text-white px-4 py-2 rounded">
-              Subir Foto
-          </button>
       </Container>
     </Box>
   );
