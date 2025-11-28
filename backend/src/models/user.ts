@@ -92,6 +92,7 @@ userSchema.virtual("profile_pic_url").get(function () {
 const User = mongoose.model<UserData>("User", userSchema);
 
 userSchema.set("toJSON", {
+    virtuals: true,
     transform: (
         _,
         returnedObject: { id?: string; _id?: mongoose.Types.ObjectId; __v?: number }
